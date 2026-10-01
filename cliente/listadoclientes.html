@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>📊 Listado de Clientes | Gym Guajira</title>
+
+<link rel="stylesheet" href="../static/css/bootstrap.css">
+<link rel="stylesheet" href="../static/css/style.css?v=1001">
+
+<style>
+
+    /* ==========================================
+       MODAL ELIMINAR CLIENTE
+    ========================================== */
+
+    .modal-eliminar {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(5px);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .modal-eliminar.mostrar {
+        display: flex;
+    }
+
+    .modal-eliminar-contenido {
+        width: 100%;
+        max-width: 430px;
+        background: #ffffff;
+        border-radius: 22px;
+        padding: 32px;
+        text-align: center;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+        animation: aparecerModal 0.25s ease;
+    }
+
+    @keyframes aparecerModal {
+
+        from {
+            opacity: 0;
+            transform: scale(0.85) translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+    }
+
+    .modal-eliminar-icono {
+        width: 75px;
+        height: 75px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: #fff0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+    }
+
+    .modal-eliminar-contenido h2 {
+        margin: 0 0 10px;
+        font-size: 24px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .modal-eliminar-contenido p {
+        margin: 0 auto 25px;
+        color: #6b7280;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .modal-eliminar-nombre {
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .modal-eliminar-botones {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .modal-btn-cancelar,
+    .modal-btn-confirmar {
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .modal-btn-cancelar {
+        background: #eef2f7;
+        color: #374151;
+    }
+
+    .modal-btn-cancelar:hover {
+        background: #e2e8f0;
+    }
+
+    .modal-btn-confirmar {
+        background: #dc3545;
+        color: white;
+    }
+
+    .modal-btn-confirmar:hover {
+        background: #bb2d3b;
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 500px) {
+
+        .modal-eliminar-contenido {
+            padding: 25px 20px;
+        }
+
+        .modal-eliminar-botones {
+            flex-direction: column;
+        }
+
+        .modal-btn-cancelar,
+        .modal-btn-confirmar {
+            width: 100%;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- ==========================================
+     ENCABEZADO
+=========================================== -->
+
+<header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="container">
+
+            <a
+                class="navbar-brand"
+                href="../index.html">
+
+                🏋️ Gym Guajira
+
+            </a>
+
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarMenu"
+                aria-controls="navbarMenu"
+                aria-expanded="false"
+                aria-label="Mostrar menú">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <div
+                class="collapse navbar-collapse"
+                id="navbarMenu">
+
+                <ul class="navbar-nav ms-auto">
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="../index.html">
+
+                            Inicio
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link active"
+                            href="clientes.html">
+
+                            Clientes
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="../mensualidades/mensualidades.html">
+
+                            Mensualidades
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="../pagos/pagos-dia.html">
+
+                            Pagos del día
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="../balance/balance.html">
+
+                            Balance del mes
+
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ==========================================
+     CONTENIDO
+=========================================== -->
+
+<main class="pagina-listado">
+
+    <div class="listado-contenedor">
+
+
+        <!-- ==========================================
+             ENCABEZADO DEL LISTADO
+        =========================================== -->
+
+        <div class="listado-header">
+
+            <div>
+
+                <span class="listado-etiqueta">
+                    👥 CLIENTES
+                </span>
+
+                <h1>
+                    Listado de clientes
+                </h1>
+
+                <p>
+                    Consulta los clientes registrados en Gym Guajira
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn-nuevo-cliente"
+                onclick="nuevoCliente()">
+
+                <span>+</span>
+                Nuevo cliente
+
+            </button>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             BUSCADOR DE CLIENTES
+        =========================================== -->
+
+        <div class="buscador-clientes-contenedor">
+
+            <form
+                class="buscador-clientes"
+                id="formBuscarCliente">
+
+                <div class="buscador-input">
+
+                    <span>🔎</span>
+
+                    <input
+                        type="text"
+                        id="buscadorTabla"
+                        placeholder="Buscar por nombre, apellido, identificación..."
+                        autocomplete="off">
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn-buscar">
+
+                    Buscar
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="btnLimpiar"
+                    class="btn-limpiar"
+                    style="display: none;">
+
+                    Limpiar
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ==========================================
+             TABLA DE CLIENTES
+        =========================================== -->
+
+        <div class="tabla-contenedor">
+
+            <div class="tabla-responsive">
+
+                <table class="tabla-clientes">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Nombre</th>
+
+                            <th>Apellido</th>
+
+                            <th>Tipo ID</th>
+
+                            <th>Número de identificación</th>
+
+                            <th>Dirección</th>
+
+                            <th>Celular</th>
+
+                            <th>Email</th>
+
+                            <th>Estado</th>
+
+                            <th>Acción</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaClientes">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 PAGINACIÓN
+            =========================================== -->
+
+            <div
+                class="paginacion-clientes"
+                id="paginacionClientes">
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ==========================================
+             INFORMACIÓN DEL LISTADO
+        =========================================== -->
+
+        <div class="listado-footer">
+
+            <span>
+                📊 Clientes mostrados:
+            </span>
+
+            <strong id="cantidadClientes">
+                0
+            </strong>
+
+            <span id="informacionPagina">
+            </span>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- ==========================================
+     FOOTER
+=========================================== -->
+
+<footer class="text-center mt-5 mb-3">
+
+    <p>
+        © 2026 Gym Guajira
+    </p>
+
+</footer>
+
+
+
+<!-- ==========================================
+     MODAL DE CONFIRMACIÓN PARA ELIMINAR
+=========================================== -->
+
+<div
+    id="modalEliminarCliente"
+    class="modal-eliminar">
+
+    <div class="modal-eliminar-contenido">
+
+
+        <div class="modal-eliminar-icono">
+            🗑️
+        </div>
+
+
+        <h2>
+            ¿Eliminar cliente?
+        </h2>
+
+
+        <p>
+
+            Estás a punto de eliminar a
+
+            <span
+                id="nombreClienteEliminar"
+                class="modal-eliminar-nombre">
+            </span>
+
+            .
+
+            <br>
+
+            Esta acción no se puede deshacer.
+
+        </p>
+
+
+        <div class="modal-eliminar-botones">
+
+
+            <button
+                type="button"
+                id="btnCancelarEliminar"
+                class="modal-btn-cancelar">
+
+                Cancelar
+
+            </button>
+
+
+            <button
+                type="button"
+                id="btnConfirmarEliminar"
+                class="modal-btn-confirmar">
+
+                🗑️ Sí, eliminar
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ==========================================
+     JAVASCRIPT
+     SIN BASE DE DATOS
+=========================================== -->
+
+<script>
+
+    /* ==========================================
+       CLIENTES DE DEMOSTRACIÓN
+    ========================================== */
+
+    let clientes = [
+
+        {
+            id: 1,
+            nombre: "Juan David",
+            apellido: "Romero Viloria",
+            tipoId: "CC",
+            identificacion: "1065632260",
+            direccion: "Calle 10 #20-30",
+            celular: "3100000000",
+            email: "juandavid@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 2,
+            nombre: "Carlos",
+            apellido: "Pérez Gómez",
+            tipoId: "CC",
+            identificacion: "1098765432",
+            direccion: "Carrera 15 #12-45",
+            celular: "3151112233",
+            email: "carlos@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 3,
+            nombre: "María",
+            apellido: "Rodríguez Díaz",
+            tipoId: "CC",
+            identificacion: "1122334455",
+            direccion: "Calle 25 #8-20",
+            celular: "3202223344",
+            email: "maria@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 4,
+            nombre: "Andrés",
+            apellido: "González Martínez",
+            tipoId: "CC",
+            identificacion: "1010101010",
+            direccion: "Carrera 7 #18-50",
+            celular: "3003334455",
+            email: "andres@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 5,
+            nombre: "Laura",
+            apellido: "Mendoza López",
+            tipoId: "CC",
+            identificacion: "1020202020",
+            direccion: "Calle 12 #14-30",
+            celular: "3014445566",
+            email: "laura@gmail.com",
+            estado: 0
+        },
+
+        {
+            id: 6,
+            nombre: "Pedro",
+            apellido: "Martínez Torres",
+            tipoId: "CC",
+            identificacion: "1030303030",
+            direccion: "Carrera 10 #22-15",
+            celular: "3025556677",
+            email: "pedro@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 7,
+            nombre: "Sofía",
+            apellido: "Hernández Castro",
+            tipoId: "CC",
+            identificacion: "1040404040",
+            direccion: "Calle 18 #9-40",
+            celular: "3036667788",
+            email: "sofia@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 8,
+            nombre: "Daniel",
+            apellido: "Suárez Romero",
+            tipoId: "CC",
+            identificacion: "1050505050",
+            direccion: "Carrera 20 #16-25",
+            celular: "3047778899",
+            email: "daniel@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 9,
+            nombre: "Valentina",
+            apellido: "Castillo Pérez",
+            tipoId: "CC",
+            identificacion: "1070707070",
+            direccion: "Calle 30 #11-18",
+            celular: "3058889900",
+            email: "valentina@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 10,
+            nombre: "Miguel",
+            apellido: "Torres Díaz",
+            tipoId: "CC",
+            identificacion: "1080808080",
+            direccion: "Carrera 12 #24-35",
+            celular: "3069990011",
+            email: "miguel@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 11,
+            nombre: "Camila",
+            apellido: "Vargas Moreno",
+            tipoId: "CC",
+            identificacion: "1090909090",
+            direccion: "Calle 15 #19-22",
+            celular: "3071234567",
+            email: "camila@gmail.com",
+            estado: 1
+        },
+
+        {
+            id: 12,
+            nombre: "Sebastián",
+            apellido: "Morales Díaz",
+            tipoId: "CC",
+            identificacion: "1101010101",
+            direccion: "Carrera 18 #13-45",
+            celular: "3082345678",
+            email: "sebastian@gmail.com",
+            estado: 1
+        }
+
+    ];
+
+
+    /* ==========================================
+       VARIABLES DE PAGINACIÓN
+    ========================================== */
+
+    const clientesPorPagina = 5;
+
+    let paginaActual = 1;
+
+    let clientesFiltrados = [...clientes];
+
+    let clienteParaEliminar = null;
+
+
+    /* ==========================================
+       ELEMENTOS HTML
+    ========================================== */
+
+    const buscador =
+        document.getElementById("buscadorTabla");
+
+    const formulario =
+        document.getElementById("formBuscarCliente");
+
+    const btnLimpiar =
+        document.getElementById("btnLimpiar");
+
+    const tablaClientes =
+        document.getElementById("tablaClientes");
+
+    const paginacionClientes =
+        document.getElementById("paginacionClientes");
+
+    const cantidadClientes =
+        document.getElementById("cantidadClientes");
+
+    const informacionPagina =
+        document.getElementById("informacionPagina");
+
+
+    /* ==========================================
+       MOSTRAR CLIENTES
+    ========================================== */
+
+    function mostrarClientes() {
+
+        tablaClientes.innerHTML = "";
+
+        const inicio =
+            (paginaActual - 1) * clientesPorPagina;
+
+        const fin =
+            inicio + clientesPorPagina;
+
+        const clientesPagina =
+            clientesFiltrados.slice(inicio, fin);
+
+
+        if (clientesPagina.length === 0) {
+
+            tablaClientes.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="9"
+                        class="tabla-vacia">
+
+                        <div>
+
+                            <div class="icono-vacio">
+                                👥
+                            </div>
+
+                            <h3>
+                                No se encontraron clientes
+                            </h3>
+
+                            <p>
+                                No hay clientes que coincidan con la búsqueda.
+                            </p>
+
+                            <button
+                                type="button"
+                                class="btn-principal"
+                                onclick="limpiarBusqueda()">
+
+                                Mostrar clientes
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            actualizarInformacion();
+
+            generarPaginacion();
+
+            return;
+
+        }
+
+
+        clientesPagina.forEach(function(cliente) {
+
+            const fila =
+                document.createElement("tr");
+
+            const inicial =
+                cliente.nombre
+                    .charAt(0)
+                    .toUpperCase();
+
+
+            const estadoHTML =
+                cliente.estado === 1
+
+                    ? `<span class="estado-activo">
+                        ● Activo
+                       </span>`
+
+                    : `<span class="estado-inactivo">
+                        ● Inactivo
+                       </span>`;
+
+
+            fila.innerHTML = `
+
+                <td>
+
+                    <div class="cliente-nombre">
+
+                        <div class="avatar-cliente">
+                            ${inicial}
+                        </div>
+
+                        <span>
+                            ${cliente.nombre}
+                        </span>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+                    ${cliente.apellido}
+                </td>
+
+
+                <td>
+
+                    <span class="badge-documento">
+                        ${cliente.tipoId}
+                    </span>
+
+                </td>
+
+
+                <td>
+                    ${cliente.identificacion}
+                </td>
+
+
+                <td>
+                    ${cliente.direccion}
+                </td>
+
+
+                <td>
+                    📱 ${cliente.celular}
+                </td>
+
+
+                <td>
+                    ${cliente.email}
+                </td>
+
+
+                <td>
+                    ${estadoHTML}
+                </td>
+
+
+                <td>
+
+                    <div class="acciones-tabla">
+
+
+                        <button
+                            type="button"
+                            class="btn-tabla editar"
+                            title="Editar"
+                            onclick="editarCliente(${cliente.id})">
+
+                            ✏️
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="btn-tabla eliminar"
+                            title="Eliminar"
+                            onclick="abrirModalEliminar(${cliente.id})">
+
+                            🗑️
+
+                        </button>
+
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            tablaClientes.appendChild(fila);
+
+        });
+
+
+        actualizarInformacion();
+
+        generarPaginacion();
+
+    }
+
+
+    /* ==========================================
+       ACTUALIZAR INFORMACIÓN
+    ========================================== */
+
+    function actualizarInformacion() {
+
+        cantidadClientes.textContent =
+            clientesFiltrados.length;
+
+
+        const totalPaginas =
+            Math.ceil(
+                clientesFiltrados.length /
+                clientesPorPagina
+            );
+
+
+        if (clientesFiltrados.length > 0) {
+
+            informacionPagina.textContent =
+                ` | Página ${paginaActual} de ${totalPaginas}`;
+
+        } else {
+
+            informacionPagina.textContent = "";
+
+        }
+
+    }
+
+
+    /* ==========================================
+       GENERAR PAGINACIÓN
+    ========================================== */
+
+    function generarPaginacion() {
+
+        paginacionClientes.innerHTML = "";
+
+        const totalPaginas =
+            Math.ceil(
+                clientesFiltrados.length /
+                clientesPorPagina
+            );
+
+
+        if (totalPaginas <= 1) {
+            return;
+        }
+
+
+        const anterior =
+            document.createElement("button");
+
+        anterior.type = "button";
+
+        anterior.className =
+            "pagina-btn" +
+            (
+                paginaActual === 1
+                    ? " desactivado"
+                    : ""
+            );
+
+        anterior.innerHTML =
+            "‹ Anterior";
+
+        anterior.disabled =
+            paginaActual === 1;
+
+
+        anterior.addEventListener(
+            "click",
+            function() {
+
+                if (paginaActual > 1) {
+
+                    paginaActual--;
+
+                    mostrarClientes();
+
+                }
+
+            }
+        );
+
+
+        paginacionClientes.appendChild(anterior);
+
+
+        const numeros =
+            document.createElement("div");
+
+        numeros.className =
+            "paginas-numeros";
+
+
+        for (
+            let numero = 1;
+            numero <= totalPaginas;
+            numero++
+        ) {
+
+            const boton =
+                document.createElement("button");
+
+            boton.type = "button";
+
+            boton.className =
+                "pagina-numero" +
+                (
+                    paginaActual === numero
+                        ? " activa"
+                        : ""
+                );
+
+            boton.textContent = numero;
+
+
+            boton.addEventListener(
+                "click",
+                function() {
+
+                    paginaActual = numero;
+
+                    mostrarClientes();
+
+                }
+            );
+
+
+            numeros.appendChild(boton);
+
+        }
+
+
+        paginacionClientes.appendChild(numeros);
+
+
+        const siguiente =
+            document.createElement("button");
+
+        siguiente.type = "button";
+
+        siguiente.className =
+            "pagina-btn" +
+            (
+                paginaActual === totalPaginas
+                    ? " desactivado"
+                    : ""
+            );
+
+        siguiente.innerHTML =
+            "Siguiente ›";
+
+        siguiente.disabled =
+            paginaActual === totalPaginas;
+
+
+        siguiente.addEventListener(
+            "click",
+            function() {
+
+                if (
+                    paginaActual <
+                    totalPaginas
+                ) {
+
+                    paginaActual++;
+
+                    mostrarClientes();
+
+                }
+
+            }
+        );
+
+
+        paginacionClientes.appendChild(siguiente);
+
+    }
+
+
+    /* ==========================================
+       BUSCAR CLIENTES
+    ========================================== */
+
+    function buscarClientes() {
+
+        const texto =
+            buscador.value
+                .trim()
+                .toLowerCase();
+
+
+        clientesFiltrados =
+            clientes.filter(function(cliente) {
+
+                return (
+
+                    cliente.nombre
+                        .toLowerCase()
+                        .includes(texto)
+
+                    ||
+
+                    cliente.apellido
+                        .toLowerCase()
+                        .includes(texto)
+
+                    ||
+
+                    cliente.identificacion
+                        .toLowerCase()
+                        .includes(texto)
+
+                    ||
+
+                    cliente.email
+                        .toLowerCase()
+                        .includes(texto)
+
+                    ||
+
+                    cliente.celular
+                        .toLowerCase()
+                        .includes(texto)
+
+                    ||
+
+                    cliente.direccion
+                        .toLowerCase()
+                        .includes(texto)
+
+                    ||
+
+                    cliente.tipoId
+                        .toLowerCase()
+                        .includes(texto)
+
+                );
+
+            });
+
+
+        paginaActual = 1;
+
+
+        btnLimpiar.style.display =
+            texto !== ""
+                ? "inline-block"
+                : "none";
+
+
+        mostrarClientes();
+
+    }
+
+
+    /* ==========================================
+       FORMULARIO DE BÚSQUEDA
+    ========================================== */
+
+    formulario.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+            buscarClientes();
+
+        }
+    );
+
+
+    /* ==========================================
+       BÚSQUEDA AUTOMÁTICA
+    ========================================== */
+
+    let temporizador;
+
+
+    buscador.addEventListener(
+        "input",
+        function() {
+
+            clearTimeout(temporizador);
+
+            temporizador =
+                setTimeout(
+                    buscarClientes,
+                    300
+                );
+
+        }
+    );
+
+
+    /* ==========================================
+       BUSCAR CON ENTER
+    ========================================== */
+
+    buscador.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                clearTimeout(temporizador);
+
+                buscarClientes();
+
+            }
+
+        }
+    );
+
+
+    /* ==========================================
+       LIMPIAR BÚSQUEDA
+    ========================================== */
+
+    btnLimpiar.addEventListener(
+        "click",
+        limpiarBusqueda
+    );
+
+
+    function limpiarBusqueda() {
+
+        buscador.value = "";
+
+        clientesFiltrados =
+            [...clientes];
+
+        paginaActual = 1;
+
+        btnLimpiar.style.display =
+            "none";
+
+        mostrarClientes();
+
+        buscador.focus();
+
+    }
+
+
+    /* ==========================================
+       NUEVO CLIENTE
+    ========================================== */
+
+    function nuevoCliente() {
+
+        window.location.href =
+            "registrar-cliente.html";
+
+    }
+
+
+    /* ==========================================
+       EDITAR CLIENTE
+    ========================================== */
+
+    function editarCliente(id) {
+
+        const cliente =
+            clientes.find(
+                function(item) {
+                    return item.id === id;
+                }
+            );
+
+
+        if (!cliente) {
+            return;
+        }
+
+
+        window.location.href =
+            "actualizar-cliente.html";
+
+    }
+
+
+    /* ==========================================
+       MODAL ELIMINAR
+    ========================================== */
+
+    const modalEliminar =
+        document.getElementById(
+            "modalEliminarCliente"
+        );
+
+
+    const nombreClienteEliminar =
+        document.getElementById(
+            "nombreClienteEliminar"
+        );
+
+
+    const btnCancelarEliminar =
+        document.getElementById(
+            "btnCancelarEliminar"
+        );
+
+
+    const btnConfirmarEliminar =
+        document.getElementById(
+            "btnConfirmarEliminar"
+        );
+
+
+    /* ==========================================
+       ABRIR MODAL
+    ========================================== */
+
+    function abrirModalEliminar(id) {
+
+        const cliente =
+            clientes.find(
+                function(item) {
+                    return item.id === id;
+                }
+            );
+
+
+        if (!cliente) {
+            return;
+        }
+
+
+        clienteParaEliminar = id;
+
+
+        nombreClienteEliminar.textContent =
+            cliente.nombre +
+            " " +
+            cliente.apellido;
+
+
+        modalEliminar.classList.add(
+            "mostrar"
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    /* ==========================================
+       CANCELAR ELIMINACIÓN
+    ========================================== */
+
+    btnCancelarEliminar.addEventListener(
+        "click",
+        function() {
+
+            cerrarModalEliminar();
+
+        }
+    );
+
+
+    /* ==========================================
+       CONFIRMAR ELIMINACIÓN
+    ========================================== */
+
+    btnConfirmarEliminar.addEventListener(
+        "click",
+        function() {
+
+            if (clienteParaEliminar === null) {
+                return;
+            }
+
+
+            clientes =
+                clientes.filter(
+                    function(cliente) {
+
+                        return cliente.id !==
+                            clienteParaEliminar;
+
+                    }
+                );
+
+
+            clientesFiltrados =
+                [...clientes];
+
+
+            const totalPaginas =
+                Math.max(
+                    1,
+                    Math.ceil(
+                        clientesFiltrados.length /
+                        clientesPorPagina
+                    )
+                );
+
+
+            if (
+                paginaActual >
+                totalPaginas
+            ) {
+
+                paginaActual =
+                    totalPaginas;
+
+            }
+
+
+            cerrarModalEliminar();
+
+            mostrarClientes();
+
+
+            alert(
+                "✅ Cliente eliminado de la demostración."
+            );
+
+        }
+    );
+
+
+    /* ==========================================
+       CERRAR MODAL
+    ========================================== */
+
+    modalEliminar.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                modalEliminar
+            ) {
+
+                cerrarModalEliminar();
+
+            }
+
+        }
+    );
+
+
+    /* ==========================================
+       CERRAR CON ESC
+    ========================================== */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape" &&
+                modalEliminar.classList.contains(
+                    "mostrar"
+                )
+            ) {
+
+                cerrarModalEliminar();
+
+            }
+
+        }
+    );
+
+
+    /* ==========================================
+       FUNCIÓN CERRAR MODAL
+    ========================================== */
+
+    function cerrarModalEliminar() {
+
+        modalEliminar.classList.remove(
+            "mostrar"
+        );
+
+
+        document.body.style.overflow = "";
+
+        clienteParaEliminar = null;
+
+    }
+
+
+    /* ==========================================
+       CARGAR LISTADO
+    ========================================== */
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            mostrarClientes();
+
+            buscador.focus();
+
+        }
+    );
+
+</script>
+```
+
+</body>
+
+</html>
+

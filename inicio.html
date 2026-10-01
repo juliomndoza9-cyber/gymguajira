@@ -1,0 +1,225 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🏋️ Gym Guajira</title>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+    <link rel="stylesheet" href="css/style.css?v=1001">
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         ENCABEZADO
+    =========================================== -->
+
+    <div id="header-container"></div>
+
+
+
+    <!-- ==========================================
+         HERO PRINCIPAL
+    =========================================== -->
+
+    <section class="hero">
+
+        <div class="hero-contenido">
+
+            <div class="hero-texto">
+
+                <h1>
+                    Bienvenido a Gym Guajira
+                </h1>
+
+                <p>
+                    Administra fácilmente clientes,
+                    mensualidades y pagos de tu gimnasio.
+                </p>
+
+            </div>
+
+
+            <!-- IMAGEN -->
+
+            <div class="hero-imagen">
+
+                <img
+                    src=""
+                    alt="Logo de Gym Guajira">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         SERVICIOS
+    =========================================== -->
+
+    <section class="servicios">
+
+        <h2>
+            ¿Qué puedes hacer?
+        </h2>
+
+
+        <div class="tarjetas">
+
+
+            <!-- ==========================================
+                 TARJETA 1
+            =========================================== -->
+
+            <div class="tarjeta">
+
+                <div class="icono">
+                    🏋️
+                </div>
+
+                <h3>
+                    Ver Catálogo
+                </h3>
+
+                <p>
+                    Consulta los servicios y opciones
+                    disponibles en Gym Guajira.
+                </p>
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 TARJETA 2
+            =========================================== -->
+
+            <div class="tarjeta">
+
+                <div class="icono">
+                    🛒
+                </div>
+
+                <h3>
+                    Añadir al carrito
+                </h3>
+
+                <p>
+                    Agrega productos al carrito y
+                    consulta fácilmente los elementos
+                    seleccionados.
+                </p>
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 TARJETA 3
+            =========================================== -->
+
+            <div class="tarjeta">
+
+                <div class="icono">
+                    🚪
+                </div>
+
+                <h3>
+                    Cerrar sesión
+                </h3>
+
+                <p>
+                    Finaliza tu sesión de trabajo de
+                    manera rápida y sencilla.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         PIE DE PÁGINA
+    =========================================== -->
+
+    <div id="footer-container"></div>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <script>
+
+
+        /* ==========================================
+           CARGAR HEADER
+        =========================================== */
+
+        fetch("inc/header.html")
+            .then(response => response.text())
+            .then(data => {
+
+                document.getElementById(
+                    "header-container"
+                ).innerHTML = data;
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "Error al cargar el header:",
+                    error
+                );
+
+            });
+
+
+
+        /* ==========================================
+           CARGAR FOOTER
+        =========================================== */
+
+        fetch("inc/footer.html")
+            .then(response => response.text())
+            .then(data => {
+
+                document.getElementById(
+                    "footer-container"
+                ).innerHTML = data;
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "Error al cargar el footer:",
+                    error
+                );
+
+            });
+
+    </script>
+
+
+</body>
+
+</html>
+```

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Pago del día | Gym Guajira</title>
+
+<link
+    rel="stylesheet"
+    href="../css/bootstrap.css"
+>
+
+<link
+    rel="stylesheet"
+    href="../css/style.css?v=1001"
+>
+```
+
+</head>
+
+<body>
+
+<!-- ========================================== -->
+
+<!-- ENCABEZADO -->
+
+<!-- ========================================== -->
+
+<div id="header-container"></div>
+
+<div class="container mt-5">
+
+```
+<div class="card shadow">
+
+    <div class="card-header text-center">
+
+        <h3>
+            🏋️ Registro de pago del día
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+
+        <!-- ========================================== -->
+        <!-- MENSAJE DE DEMOSTRACIÓN -->
+        <!-- ========================================== -->
+
+        <div
+            id="mensaje"
+            class="alert"
+            style="display:none;"
+        ></div>
+
+
+        <!-- ========================================== -->
+        <!-- FORMULARIO -->
+        <!-- ========================================== -->
+
+        <form
+            id="formPagoDia"
+            autocomplete="off"
+        >
+
+
+            <!-- DOCUMENTO -->
+
+            <div class="row">
+
+                <div class="col-md-8">
+
+                    <label class="form-label">
+
+                        Documento de identidad
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="documento"
+                        class="form-control"
+                        placeholder="Ingrese la cédula"
+                        maxlength="20"
+                        inputmode="numeric"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="col-md-4 d-flex align-items-end">
+
+                    <button
+                        type="button"
+                        class="btn btn-primary w-100"
+                        onclick="buscarCliente()"
+                    >
+
+                        🔍 Buscar cliente
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================== -->
+            <!-- INFORMACIÓN CLIENTE -->
+            <!-- ========================================== -->
+
+            <div
+                id="informacionCliente"
+                style="display:none;"
+                class="mt-4"
+            >
+
+                <div class="alert alert-success">
+
+                    <h5>
+                        Cliente encontrado
+                    </h5>
+
+                    <p>
+
+                        <strong>Documento:</strong>
+
+                        <span id="mostrarDocumento"></span>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Nombre:</strong>
+
+                        <span id="mostrarNombre"></span>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Dirección:</strong>
+
+                        <span id="mostrarDireccion"></span>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Teléfono:</strong>
+
+                        <span id="mostrarTelefono"></span>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Correo:</strong>
+
+                        <span id="mostrarEmail"></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================== -->
+            <!-- INFORMACIÓN DEL PAGO -->
+            <!-- ========================================== -->
+
+            <div
+                id="informacionPago"
+                style="display:none;"
+                class="mt-4"
+            >
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <h5>
+                            💵 Información del pago
+                        </h5>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+
+                                    Fecha
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="fechaPago"
+                                    class="form-control"
+                                    readonly
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+
+                                    Valor del día
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    value="$4.000"
+                                    class="form-control"
+                                    readonly
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="alert alert-info mt-3">
+
+                            El valor del ingreso al gimnasio
+                            por el día es de
+                            <strong>$4.000</strong>.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================== -->
+            <!-- BOTONES -->
+            <!-- ========================================== -->
+
+            <div class="mt-4">
+
+                <button
+                    type="submit"
+                    id="btnRegistrar"
+                    class="btn btn-success"
+                    disabled
+                >
+
+                    💵 Registrar pago $4.000
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="cancelarRegistro()"
+                >
+
+                    Cancelar
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-dark"
+                    onclick="verPagos()"
+                >
+
+                    📋 Ver pagos
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- ========================================== -->
+
+<!-- PIE DE PÁGINA -->
+
+<!-- ========================================== -->
+
+<div id="footer-container"></div>
+
+<!-- ========================================== -->
+
+<!-- JAVASCRIPT -->
+
+<!-- ========================================== -->
+
+<script>
+
+
+/*
+==========================================================
+CARGAR HEADER
+==========================================================
+*/
+
+fetch("../inc/header.html")
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "No se pudo cargar el header."
+            );
+
+        }
+
+        return response.text();
+
+    })
+
+    .then(function(html) {
+
+        document.getElementById(
+            "header-container"
+        ).innerHTML = html;
+
+    })
+
+    .catch(function(error) {
+
+        console.log(
+            "Error al cargar el header:",
+            error
+        );
+
+    });
+
+
+
+/*
+==========================================================
+CARGAR FOOTER
+==========================================================
+*/
+
+fetch("../inc/footer.html")
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "No se pudo cargar el footer."
+            );
+
+        }
+
+        return response.text();
+
+    })
+
+    .then(function(html) {
+
+        document.getElementById(
+            "footer-container"
+        ).innerHTML = html;
+
+    })
+
+    .catch(function(error) {
+
+        console.log(
+            "Error al cargar el footer:",
+            error
+        );
+
+    });
+
+
+
+/*
+==========================================================
+CLIENTES DE DEMOSTRACIÓN
+==========================================================
+*/
+
+const clientesDemo = [
+
+    {
+        identificacion: "1065632260",
+        nombres: "Juan David",
+        apellidos: "Romero Viloria",
+        direccion: "Calle 10 #20-30",
+        telefono: "3100000000",
+        email: "juandavid@gmail.com"
+    },
+
+    {
+        identificacion: "1065643210",
+        nombres: "Carlos",
+        apellidos: "Pérez Gómez",
+        direccion: "Carrera 15 #12-45",
+        telefono: "3001234567",
+        email: "carlos@gmail.com"
+    },
+
+    {
+        identificacion: "1065678901",
+        nombres: "María",
+        apellidos: "Rodríguez Díaz",
+        direccion: "Calle 20 #10-25",
+        telefono: "3159876543",
+        email: "maria@gmail.com"
+    }
+
+];
+
+
+
+/*
+==========================================================
+BUSCAR CLIENTE
+==========================================================
+*/
+
+function buscarCliente() {
+
+    const documento =
+        document.getElementById(
+            "documento"
+        ).value.trim();
+
+
+    if (!documento) {
+
+        mostrarMensaje(
+            "Ingresa el documento de identidad.",
+            "danger"
+        );
+
+        ocultarInformacion();
+
+        return;
+
+    }
+
+
+    const cliente =
+        clientesDemo.find(
+            function(cliente) {
+
+                return (
+                    cliente.identificacion ===
+                    documento
+                );
+
+            }
+        );
+
+
+    if (!cliente) {
+
+        mostrarMensaje(
+            "Cliente no encontrado. Para esta demostración puedes usar: 1065632260, 1065643210 o 1065678901.",
+            "warning"
+        );
+
+        ocultarInformacion();
+
+        return;
+
+    }
+
+
+    /*
+    ==========================================
+    DATOS DEL CLIENTE
+    ==========================================
+    */
+
+    document.getElementById(
+        "mostrarDocumento"
+    ).textContent =
+        cliente.identificacion;
+
+
+    document.getElementById(
+        "mostrarNombre"
+    ).textContent =
+        cliente.nombres
+        + " "
+        + cliente.apellidos;
+
+
+    document.getElementById(
+        "mostrarDireccion"
+    ).textContent =
+        cliente.direccion;
+
+
+    document.getElementById(
+        "mostrarTelefono"
+    ).textContent =
+        cliente.telefono;
+
+
+    document.getElementById(
+        "mostrarEmail"
+    ).textContent =
+        cliente.email;
+
+
+
+    /*
+    ==========================================
+    MOSTRAR INFORMACIÓN
+    ==========================================
+    */
+
+    document.getElementById(
+        "informacionCliente"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "informacionPago"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "btnRegistrar"
+    ).disabled =
+        false;
+
+
+    mostrarMensaje(
+        "Cliente encontrado correctamente.",
+        "success"
+    );
+
+}
+
+
+
+/*
+==========================================================
+OCULTAR INFORMACIÓN
+==========================================================
+*/
+
+function ocultarInformacion() {
+
+    document.getElementById(
+        "informacionCliente"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "informacionPago"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "btnRegistrar"
+    ).disabled =
+        true;
+
+}
+
+
+
+/*
+==========================================================
+MOSTRAR MENSAJE
+==========================================================
+*/
+
+function mostrarMensaje(
+    texto,
+    tipo
+) {
+
+    const mensaje =
+        document.getElementById(
+            "mensaje"
+        );
+
+
+    mensaje.className =
+        "alert alert-" + tipo;
+
+
+    mensaje.textContent =
+        texto;
+
+
+    mensaje.style.display =
+        "block";
+
+}
+
+
+
+/*
+==========================================================
+REGISTRAR PAGO
+==========================================================
+*/
+
+document.getElementById(
+    "formPagoDia"
+).addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const documento =
+            document.getElementById(
+                "mostrarDocumento"
+            ).textContent;
+
+
+        const nombre =
+            document.getElementById(
+                "mostrarNombre"
+            ).textContent;
+
+
+        const fecha =
+            document.getElementById(
+                "fechaPago"
+            ).value;
+
+
+        if (!documento || !nombre) {
+
+            mostrarMensaje(
+                "Primero debes buscar un cliente.",
+                "warning"
+            );
+
+            return;
+
+        }
+
+
+        mostrarMensaje(
+
+            "✅ Pago registrado correctamente. " +
+
+            "Cliente: " +
+            nombre +
+
+            " | Documento: " +
+            documento +
+
+            " | Fecha: " +
+            fecha +
+
+            " | Valor: $4.000. " +
+
+            "Este registro es únicamente demostrativo " +
+            "y no se guarda en una base de datos.",
+
+            "success"
+
+        );
+
+
+        document.getElementById(
+            "btnRegistrar"
+        ).disabled =
+            true;
+
+    }
+);
+
+
+
+/*
+==========================================================
+FECHA ACTUAL
+==========================================================
+*/
+
+function colocarFecha() {
+
+    const hoy =
+        new Date();
+
+
+    const dia =
+        String(
+            hoy.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const mes =
+        String(
+            hoy.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const anio =
+        hoy.getFullYear();
+
+
+    document.getElementById(
+        "fechaPago"
+    ).value =
+        dia
+        + "/"
+        + mes
+        + "/"
+        + anio;
+
+}
+
+
+
+/*
+==========================================================
+CANCELAR
+==========================================================
+*/
+
+function cancelarRegistro() {
+
+    if (
+        confirm(
+            "¿Deseas cancelar el registro del pago?"
+        )
+    ) {
+
+        window.location.href =
+            "../index.html";
+
+    }
+
+}
+
+
+
+/*
+==========================================================
+VER PAGOS
+==========================================================
+*/
+
+function verPagos() {
+
+    window.location.href =
+        "listadopagosdia.html";
+
+}
+
+
+
+/*
+==========================================================
+SOLO NÚMEROS EN DOCUMENTO
+==========================================================
+*/
+
+document
+    .getElementById("documento")
+    .addEventListener(
+        "input",
+        function() {
+
+            this.value =
+                this.value.replace(
+                    /\D/g,
+                    ""
+                );
+
+        }
+    );
+
+
+
+/*
+==========================================================
+INICIALIZAR
+==========================================================
+*/
+
+colocarFecha();
+
+</script>
+
+<!-- ========================================== -->
+
+<!-- BOOTSTRAP -->
+
+<!-- ========================================== -->
+
+<script src="../js/bootstrap.bundle.js"></script>
+
+</body>
+
+</html>
+

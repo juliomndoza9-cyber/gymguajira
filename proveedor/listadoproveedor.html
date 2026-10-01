@@ -1,0 +1,1533 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>📅 Listado de Mensualidades | Gym Guajira</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
+    <link rel="stylesheet" href="../css/style.css?v=1001">
+
+
+    <style>
+
+        /* ==========================================
+           MODAL ELIMINAR MENSUALIDAD
+        =========================================== */
+
+        .modal-eliminar {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-eliminar.activo {
+            display: flex;
+        }
+
+        .modal-eliminar-contenido {
+            width: 100%;
+            max-width: 430px;
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 35px 30px 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
+            animation: aparecerModal 0.25s ease;
+        }
+
+        @keyframes aparecerModal {
+
+            from {
+                opacity: 0;
+                transform: translateY(-25px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+        .modal-eliminar-icono {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #ffe5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        .modal-eliminar-contenido h2 {
+            margin: 0 0 10px;
+            font-size: 25px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .modal-eliminar-contenido p {
+            margin: 0 auto 25px;
+            color: #6b7280;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .modal-eliminar-acciones {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .modal-btn-cancelar,
+        .modal-btn-eliminar {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .modal-btn-cancelar {
+            background: #eeeeff;
+            color: #5b3f91;
+        }
+
+        .modal-btn-cancelar:hover {
+            background: #ddd8f5;
+        }
+
+        .modal-btn-eliminar {
+            background: #dc3545;
+            color: white;
+        }
+
+        .modal-btn-eliminar:hover {
+            background: #bb2d3b;
+            transform: translateY(-1px);
+        }
+
+        .fecha-mensualidad {
+            white-space: nowrap;
+        }
+
+        .estado-vigente {
+            color: #198754;
+            font-weight: 600;
+        }
+
+        .estado-vencida {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        @media (max-width: 500px) {
+
+            .modal-eliminar-contenido {
+                padding: 30px 20px 25px;
+            }
+
+            .modal-eliminar-acciones {
+                flex-direction: column;
+            }
+
+            .modal-btn-cancelar,
+            .modal-btn-eliminar {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         ENCABEZADO
+    =========================================== -->
+
+    <div id="header-container"></div>
+
+
+
+    <!-- ==========================================
+         CONTENIDO
+    =========================================== -->
+
+    <main class="pagina-listado">
+
+        <div class="listado-contenedor">
+
+
+            <!-- ==========================================
+                 ENCABEZADO DEL LISTADO
+            =========================================== -->
+
+            <div class="listado-header">
+
+                <div>
+
+                    <span class="listado-etiqueta">
+                        📅 Mensualidades
+                    </span>
+
+                    <h1>
+                        Listado de mensualidades
+                    </h1>
+
+                    <p>
+                        Consulta y administra las mensualidades registradas
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-nuevo-cliente"
+                    onclick="nuevaMensualidad()">
+
+                    <span>+</span>
+
+                    Nueva mensualidad
+
+                </button>
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 BUSCADOR
+            =========================================== -->
+
+            <div class="buscador-clientes-contenedor">
+
+                <div class="buscador-clientes">
+
+                    <div class="buscador-input">
+
+                        <span>🔎</span>
+
+                        <input
+                            type="text"
+                            id="buscadorTabla"
+                            placeholder="Buscar por documento o nombre..."
+                            autocomplete="off">
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn-buscar"
+                        onclick="buscarMensualidades()">
+
+                        Buscar
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="btn-limpiar"
+                        id="btnLimpiar"
+                        onclick="limpiarBusqueda()"
+                        style="display: none;">
+
+                        Limpiar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 TABLA DE MENSUALIDADES
+            =========================================== -->
+
+            <div class="tabla-contenedor">
+
+                <div class="tabla-responsive">
+
+                    <table class="tabla-clientes">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Documento</th>
+
+                                <th>Cliente</th>
+
+                                <th>Tipo ID</th>
+
+                                <th>Teléfono</th>
+
+                                <th>Email</th>
+
+                                <th>Fecha inicio</th>
+
+                                <th>Fecha final</th>
+
+                                <th>Estado</th>
+
+                                <th>Acción</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tablaMensualidades"></tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <!-- ==========================================
+                     PAGINACIÓN
+                =========================================== -->
+
+                <div
+                    class="paginacion-clientes"
+                    id="paginacionMensualidades">
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 INFORMACIÓN
+            =========================================== -->
+
+            <div class="listado-footer">
+
+                <span>
+                    📊 Mensualidades mostradas:
+                </span>
+
+                <strong id="cantidadMensualidades">
+                    0
+                </strong>
+
+                <span id="informacionPagina"></span>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
+
+    <div id="footer-container"></div>
+
+
+
+    <!-- ==========================================
+         MODAL ELIMINAR
+    =========================================== -->
+
+    <div
+        id="modalEliminarMensualidad"
+        class="modal-eliminar">
+
+
+        <div class="modal-eliminar-contenido">
+
+
+            <div class="modal-eliminar-icono">
+                🗑️
+            </div>
+
+
+            <h2>
+                ¿Eliminar mensualidad?
+            </h2>
+
+
+            <p>
+                Esta acción eliminará la mensualidad seleccionada.
+                ¿Estás seguro de que deseas continuar?
+            </p>
+
+
+            <div class="modal-eliminar-acciones">
+
+
+                <button
+                    type="button"
+                    class="modal-btn-cancelar"
+                    onclick="cerrarModalEliminar()">
+
+                    Cancelar
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="modal-btn-eliminar"
+                    onclick="confirmarEliminar()">
+
+                    🗑️ Sí, eliminar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+         SIN BASE DE DATOS
+    =========================================== -->
+
+    <script>
+
+
+        /* ==========================================
+           CARGAR HEADER
+        =========================================== */
+
+        fetch("../inc/header.html")
+            .then(response => response.text())
+            .then(data => {
+
+                document.getElementById(
+                    "header-container"
+                ).innerHTML = data;
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "Error al cargar el header:",
+                    error
+                );
+
+            });
+
+
+
+        /* ==========================================
+           CARGAR FOOTER
+        =========================================== */
+
+        fetch("../inc/footer.html")
+            .then(response => response.text())
+            .then(data => {
+
+                document.getElementById(
+                    "footer-container"
+                ).innerHTML = data;
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "Error al cargar el footer:",
+                    error
+                );
+
+            });
+
+
+
+        /* ==========================================
+           DATOS DEMOSTRATIVOS
+        =========================================== */
+
+        let mensualidades = [
+
+            {
+                id: 1,
+                identificacion: "1065632260",
+                nombres: "Juan David",
+                apellidos: "Romero Viloria",
+                tipo: "CC",
+                telefono: "3100000000",
+                email: "juandavid@gmail.com",
+                fecha_inicio: "01/10/2026",
+                fecha_fin: "01/11/2026",
+                estado: true
+            },
+
+            {
+                id: 2,
+                identificacion: "1065643210",
+                nombres: "Carlos",
+                apellidos: "Pérez Gómez",
+                tipo: "CC",
+                telefono: "3001234567",
+                email: "carlos@gmail.com",
+                fecha_inicio: "25/09/2026",
+                fecha_fin: "25/10/2026",
+                estado: true
+            },
+
+            {
+                id: 3,
+                identificacion: "1065678901",
+                nombres: "María",
+                apellidos: "Rodríguez Díaz",
+                tipo: "CC",
+                telefono: "3159876543",
+                email: "maria@gmail.com",
+                fecha_inicio: "10/08/2026",
+                fecha_fin: "10/09/2026",
+                estado: false
+            },
+
+            {
+                id: 4,
+                identificacion: "1122334455",
+                nombres: "Andrés",
+                apellidos: "González López",
+                tipo: "CC",
+                telefono: "3014567890",
+                email: "andres@gmail.com",
+                fecha_inicio: "15/09/2026",
+                fecha_fin: "15/10/2026",
+                estado: true
+            },
+
+            {
+                id: 5,
+                identificacion: "1144556677",
+                nombres: "Laura",
+                apellidos: "Martínez Pérez",
+                tipo: "CC",
+                telefono: "3207894561",
+                email: "laura@gmail.com",
+                fecha_inicio: "20/08/2026",
+                fecha_fin: "20/09/2026",
+                estado: false
+            },
+
+            {
+                id: 6,
+                identificacion: "900123456",
+                nombres: "Gym Fitness",
+                apellidos: "Guajira S.A.S.",
+                tipo: "NIT",
+                telefono: "6057280000",
+                email: "contacto@gymguajira.com",
+                fecha_inicio: "05/10/2026",
+                fecha_fin: "05/11/2026",
+                estado: true
+            },
+
+            {
+                id: 7,
+                identificacion: "1087654321",
+                nombres: "Pedro",
+                apellidos: "Hernández Díaz",
+                tipo: "CC",
+                telefono: "3123456789",
+                email: "pedro@gmail.com",
+                fecha_inicio: "12/09/2026",
+                fecha_fin: "12/10/2026",
+                estado: true
+            },
+
+            {
+                id: 8,
+                identificacion: "1098765432",
+                nombres: "Sofía",
+                apellidos: "Torres Mendoza",
+                tipo: "CC",
+                telefono: "3167890123",
+                email: "sofia@gmail.com",
+                fecha_inicio: "01/08/2026",
+                fecha_fin: "01/09/2026",
+                estado: false
+            },
+
+            {
+                id: 9,
+                identificacion: "1023456789",
+                nombres: "Miguel",
+                apellidos: "Suárez Romero",
+                tipo: "CC",
+                telefono: "3184567890",
+                email: "miguel@gmail.com",
+                fecha_inicio: "18/09/2026",
+                fecha_fin: "18/10/2026",
+                estado: true
+            },
+
+            {
+                id: 10,
+                identificacion: "1034567890",
+                nombres: "Daniela",
+                apellidos: "Gómez Rojas",
+                tipo: "CC",
+                telefono: "3145678901",
+                email: "daniela@gmail.com",
+                fecha_inicio: "22/08/2026",
+                fecha_fin: "22/09/2026",
+                estado: false
+            },
+
+            {
+                id: 11,
+                identificacion: "1045678901",
+                nombres: "Sebastián",
+                apellidos: "Castro Díaz",
+                tipo: "CC",
+                telefono: "3136789012",
+                email: "sebastian@gmail.com",
+                fecha_inicio: "05/10/2026",
+                fecha_fin: "05/11/2026",
+                estado: true
+            },
+
+            {
+                id: 12,
+                identificacion: "1056789012",
+                nombres: "Valentina",
+                apellidos: "Mendoza López",
+                tipo: "CC",
+                telefono: "3197890123",
+                email: "valentina@gmail.com",
+                fecha_inicio: "14/09/2026",
+                fecha_fin: "14/10/2026",
+                estado: true
+            }
+
+        ];
+
+
+
+        /* ==========================================
+           CONFIGURACIÓN
+        =========================================== */
+
+        const registrosPorPagina = 5;
+
+        let paginaActual = 1;
+
+        let mensualidadesFiltradas = [
+            ...mensualidades
+        ];
+
+        let mensualidadEliminar = null;
+
+
+
+        /* ==========================================
+           MOSTRAR TABLA
+        =========================================== */
+
+        function mostrarMensualidades() {
+
+            const tabla =
+                document.getElementById(
+                    "tablaMensualidades"
+                );
+
+            tabla.innerHTML = "";
+
+
+            if (
+                mensualidadesFiltradas.length === 0
+            ) {
+
+                tabla.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="10"
+                            class="tabla-vacia">
+
+                            <div>
+
+                                <div class="icono-vacio">
+                                    📅
+                                </div>
+
+                                <h3>
+                                    No se encontraron mensualidades
+                                </h3>
+
+                                <p>
+                                    No hay mensualidades que coincidan
+                                    con la búsqueda.
+                                </p>
+
+                                <button
+                                    type="button"
+                                    class="btn-principal"
+                                    onclick="nuevaMensualidad()">
+
+                                    Registrar mensualidad
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+                actualizarInformacion();
+
+                actualizarPaginacion();
+
+                return;
+
+            }
+
+
+            const inicio =
+                (paginaActual - 1) *
+                registrosPorPagina;
+
+            const fin =
+                inicio +
+                registrosPorPagina;
+
+            const registrosPagina =
+                mensualidadesFiltradas.slice(
+                    inicio,
+                    fin
+                );
+
+
+            registrosPagina.forEach(function(m) {
+
+                const fila =
+                    document.createElement("tr");
+
+
+                const inicial =
+                    m.nombres
+                        .charAt(0)
+                        .toUpperCase();
+
+
+                const estadoHTML = m.estado
+
+                    ? `
+                        <span class="estado-vigente">
+                            ● Vigente
+                        </span>
+                      `
+
+                    : `
+                        <span class="estado-vencida">
+                            ● Vencida
+                        </span>
+                      `;
+
+
+                fila.innerHTML = `
+
+                    <td>
+                        ${m.id}
+                    </td>
+
+
+                    <td>
+                        <strong>
+                            ${m.identificacion}
+                        </strong>
+                    </td>
+
+
+                    <td>
+
+                        <div class="cliente-nombre">
+
+                            <div class="avatar-cliente">
+                                ${inicial}
+                            </div>
+
+                            <span>
+                                ${m.nombres}
+                                ${m.apellidos}
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="badge-documento">
+                            ${m.tipo}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        📱 ${m.telefono}
+                    </td>
+
+
+                    <td>
+                        ${m.email}
+                    </td>
+
+
+                    <td class="fecha-mensualidad">
+                        📅 ${m.fecha_inicio}
+                    </td>
+
+
+                    <td class="fecha-mensualidad">
+                        📅 ${m.fecha_fin}
+                    </td>
+
+
+                    <td>
+                        ${estadoHTML}
+                    </td>
+
+
+                    <td>
+
+                        <div class="acciones-tabla">
+
+                            <button
+                                type="button"
+                                class="btn-tabla editar"
+                                title="Editar"
+                                onclick="editarMensualidad(${m.id})">
+
+                                ✏️
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="btn-tabla eliminar"
+                                title="Eliminar"
+                                onclick="abrirModalEliminar(${m.id})">
+
+                                ❌
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                `;
+
+
+                tabla.appendChild(fila);
+
+            });
+
+
+            actualizarPaginacion();
+
+            actualizarInformacion();
+
+        }
+
+
+
+        /* ==========================================
+           PAGINACIÓN
+        =========================================== */
+
+        function actualizarPaginacion() {
+
+            const contenedor =
+                document.getElementById(
+                    "paginacionMensualidades"
+                );
+
+            contenedor.innerHTML = "";
+
+
+            const totalPaginas =
+                Math.ceil(
+                    mensualidadesFiltradas.length /
+                    registrosPorPagina
+                );
+
+
+            if (
+                totalPaginas <= 1
+            ) {
+
+                return;
+
+            }
+
+
+            const botonAnterior =
+                document.createElement("button");
+
+            botonAnterior.className =
+                "pagina-btn";
+
+            botonAnterior.innerHTML =
+                "‹ Anterior";
+
+            botonAnterior.disabled =
+                paginaActual === 1;
+
+
+            if (
+                paginaActual === 1
+            ) {
+
+                botonAnterior.classList.add(
+                    "desactivado"
+                );
+
+            }
+
+
+            botonAnterior.onclick =
+                function() {
+
+                    if (
+                        paginaActual > 1
+                    ) {
+
+                        paginaActual--;
+
+                        mostrarMensualidades();
+
+                    }
+
+                };
+
+
+            contenedor.appendChild(
+                botonAnterior
+            );
+
+
+            const numeros =
+                document.createElement("div");
+
+            numeros.className =
+                "paginas-numeros";
+
+
+            for (
+                let numero = 1;
+                numero <= totalPaginas;
+                numero++
+            ) {
+
+                const boton =
+                    document.createElement(
+                        "button"
+                    );
+
+                boton.className =
+                    "pagina-numero";
+
+                boton.textContent =
+                    numero;
+
+
+                if (
+                    numero === paginaActual
+                ) {
+
+                    boton.classList.add(
+                        "activa"
+                    );
+
+                }
+
+
+                boton.onclick =
+                    function() {
+
+                        paginaActual =
+                            numero;
+
+                        mostrarMensualidades();
+
+                    };
+
+
+                numeros.appendChild(
+                    boton
+                );
+
+            }
+
+
+            contenedor.appendChild(
+                numeros
+            );
+
+
+            const botonSiguiente =
+                document.createElement(
+                    "button"
+                );
+
+            botonSiguiente.className =
+                "pagina-btn";
+
+            botonSiguiente.innerHTML =
+                "Siguiente ›";
+
+
+            if (
+                paginaActual ===
+                totalPaginas
+            ) {
+
+                botonSiguiente.disabled =
+                    true;
+
+                botonSiguiente.classList.add(
+                    "desactivado"
+                );
+
+            }
+
+
+            botonSiguiente.onclick =
+                function() {
+
+                    if (
+                        paginaActual <
+                        totalPaginas
+                    ) {
+
+                        paginaActual++;
+
+                        mostrarMensualidades();
+
+                    }
+
+                };
+
+
+            contenedor.appendChild(
+                botonSiguiente
+            );
+
+        }
+
+
+
+        /* ==========================================
+           INFORMACIÓN DE LA TABLA
+        =========================================== */
+
+        function actualizarInformacion() {
+
+            const cantidad =
+                document.getElementById(
+                    "cantidadMensualidades"
+                );
+
+            const informacion =
+                document.getElementById(
+                    "informacionPagina"
+                );
+
+
+            cantidad.textContent =
+                mensualidadesFiltradas.length;
+
+
+            const totalPaginas =
+                Math.ceil(
+                    mensualidadesFiltradas.length /
+                    registrosPorPagina
+                );
+
+
+            if (
+                mensualidadesFiltradas.length > 0 &&
+                totalPaginas > 1
+            ) {
+
+                informacion.textContent =
+                    ` | Página ${paginaActual} de ${totalPaginas}`;
+
+            } else {
+
+                informacion.textContent =
+                    "";
+
+            }
+
+        }
+
+
+
+        /* ==========================================
+           BUSCAR
+        =========================================== */
+
+        function buscarMensualidades() {
+
+            const texto =
+                document
+                    .getElementById(
+                        "buscadorTabla"
+                    )
+                    .value
+                    .toLowerCase()
+                    .trim();
+
+
+            mensualidadesFiltradas =
+                mensualidades.filter(
+                    function(m) {
+
+                        const documento =
+                            m.identificacion
+                                .toLowerCase();
+
+                        const nombre =
+                            (
+                                m.nombres +
+                                " " +
+                                m.apellidos
+                            ).toLowerCase();
+
+
+                        return (
+                            documento.includes(
+                                texto
+                            ) ||
+                            nombre.includes(
+                                texto
+                            )
+                        );
+
+                    }
+                );
+
+
+            paginaActual = 1;
+
+
+            document.getElementById(
+                "btnLimpiar"
+            ).style.display =
+                texto !== ""
+                    ? "inline-block"
+                    : "none";
+
+
+            mostrarMensualidades();
+
+        }
+
+
+
+        /* ==========================================
+           LIMPIAR BÚSQUEDA
+        =========================================== */
+
+        function limpiarBusqueda() {
+
+            const buscador =
+                document.getElementById(
+                    "buscadorTabla"
+                );
+
+
+            buscador.value = "";
+
+
+            mensualidadesFiltradas =
+                [
+                    ...mensualidades
+                ];
+
+
+            paginaActual = 1;
+
+
+            document.getElementById(
+                "btnLimpiar"
+            ).style.display =
+                "none";
+
+
+            mostrarMensualidades();
+
+            buscador.focus();
+
+        }
+
+
+
+        /* ==========================================
+           BÚSQUEDA AUTOMÁTICA
+        =========================================== */
+
+        let temporizadorBusqueda;
+
+
+        document
+            .getElementById(
+                "buscadorTabla"
+            )
+            .addEventListener(
+                "input",
+                function() {
+
+                    clearTimeout(
+                        temporizadorBusqueda
+                    );
+
+
+                    temporizadorBusqueda =
+                        setTimeout(
+                            buscarMensualidades,
+                            300
+                        );
+
+                }
+            );
+
+
+
+        /* ==========================================
+           BUSCAR CON ENTER
+        =========================================== */
+
+        document
+            .getElementById(
+                "buscadorTabla"
+            )
+            .addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (
+                        event.key ===
+                        "Enter"
+                    ) {
+
+                        event.preventDefault();
+
+                        clearTimeout(
+                            temporizadorBusqueda
+                        );
+
+                        buscarMensualidades();
+
+                    }
+
+                }
+            );
+
+
+
+        /* ==========================================
+           NUEVA MENSUALIDAD
+        =========================================== */
+
+        function nuevaMensualidad() {
+
+            alert(
+                "📅 Registrar nueva mensualidad\n\n" +
+                "Esta función es demostrativa.\n" +
+                "No se guardará información en una base de datos."
+            );
+
+        }
+
+
+
+        /* ==========================================
+           EDITAR MENSUALIDAD
+        =========================================== */
+
+        function editarMensualidad(id) {
+
+            const mensualidad =
+                mensualidades.find(
+                    function(m) {
+
+                        return m.id === id;
+
+                    }
+                );
+
+
+            if (!mensualidad) {
+
+                return;
+
+            }
+
+
+            alert(
+                "✏️ Editar mensualidad\n\n" +
+                "Cliente: " +
+                mensualidad.nombres +
+                " " +
+                mensualidad.apellidos +
+                "\n" +
+                "Documento: " +
+                mensualidad.identificacion +
+                "\n\n" +
+                "Esta función es demostrativa y no modifica la base de datos."
+            );
+
+        }
+
+
+
+        /* ==========================================
+           ABRIR MODAL ELIMINAR
+        =========================================== */
+
+        function abrirModalEliminar(id) {
+
+            mensualidadEliminar =
+                id;
+
+
+            document
+                .getElementById(
+                    "modalEliminarMensualidad"
+                )
+                .classList.add(
+                    "activo"
+                );
+
+        }
+
+
+
+        /* ==========================================
+           CERRAR MODAL
+        =========================================== */
+
+        function cerrarModalEliminar() {
+
+            mensualidadEliminar =
+                null;
+
+
+            document
+                .getElementById(
+                    "modalEliminarMensualidad"
+                )
+                .classList.remove(
+                    "activo"
+                );
+
+        }
+
+
+
+        /* ==========================================
+           CONFIRMAR ELIMINACIÓN
+        =========================================== */
+
+        function confirmarEliminar() {
+
+            if (
+                mensualidadEliminar === null
+            ) {
+
+                return;
+
+            }
+
+
+            const mensualidad =
+                mensualidades.find(
+                    function(m) {
+
+                        return (
+                            m.id ===
+                            mensualidadEliminar
+                        );
+
+                    }
+                );
+
+
+            if (!mensualidad) {
+
+                cerrarModalEliminar();
+
+                return;
+
+            }
+
+
+            /*
+             * Eliminación únicamente visual.
+             * No se utiliza base de datos.
+             */
+
+            mensualidades =
+                mensualidades.filter(
+                    function(m) {
+
+                        return (
+                            m.id !==
+                            mensualidadEliminar
+                        );
+
+                    }
+                );
+
+
+            mensualidadesFiltradas =
+                [
+                    ...mensualidades
+                ];
+
+
+            paginaActual = 1;
+
+
+            cerrarModalEliminar();
+
+            mostrarMensualidades();
+
+
+            alert(
+                "✅ Mensualidad eliminada correctamente.\n\n" +
+                "La eliminación es solamente demostrativa y no se guarda en una base de datos."
+            );
+
+        }
+
+
+
+        /* ==========================================
+           CERRAR MODAL AL HACER CLIC AFUERA
+        =========================================== */
+
+        document
+            .getElementById(
+                "modalEliminarMensualidad"
+            )
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        cerrarModalEliminar();
+
+                    }
+
+                }
+            );
+
+
+
+        /* ==========================================
+           CERRAR CON ESC
+        =========================================== */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape" &&
+                    document
+                        .getElementById(
+                            "modalEliminarMensualidad"
+                        )
+                        .classList
+                        .contains("activo")
+                ) {
+
+                    cerrarModalEliminar();
+
+                }
+
+            }
+        );
+
+
+
+        /* ==========================================
+           INICIALIZAR
+        =========================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                mostrarMensualidades();
+
+
+                const buscador =
+                    document.getElementById(
+                        "buscadorTabla"
+                    );
+
+
+                buscador.focus();
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
+```
+

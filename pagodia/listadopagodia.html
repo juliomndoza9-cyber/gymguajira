@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Pagos del día | Gym Guajira</title>
+
+<link
+    rel="stylesheet"
+    href="../css/bootstrap.css"
+>
+
+<link
+    rel="stylesheet"
+    href="../css/style.css?v=1001"
+>
+```
+
+</head>
+
+<body>
+
+<!-- ========================================== -->
+
+<!-- ENCABEZADO -->
+
+<!-- ========================================== -->
+
+<div id="header-container"></div>
+
+<div class="container mt-5">
+
+```
+<div class="card shadow">
+
+    <!-- ========================================== -->
+    <!-- ENCABEZADO -->
+    <!-- ========================================== -->
+
+    <div class="card-header">
+
+        <h3 class="text-center">
+
+            📋 Registro de pagos del día
+
+        </h3>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <!-- ========================================== -->
+        <!-- BUSCADOR -->
+        <!-- ========================================== -->
+
+        <div class="row mb-4">
+
+            <div class="col-md-9">
+
+                <input
+                    type="text"
+                    id="buscarPago"
+                    class="form-control"
+                    placeholder="Buscar por cédula o nombre"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <button
+                    type="button"
+                    class="btn btn-primary w-100"
+                    onclick="buscarPagos()"
+                >
+
+                    🔍 Buscar
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- TABLA -->
+        <!-- ========================================== -->
+
+        <div class="table-responsive">
+
+            <table
+                class="table table-bordered table-hover"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Documento
+                        </th>
+
+                        <th>
+                            Cliente
+                        </th>
+
+                        <th>
+                            Teléfono
+                        </th>
+
+                        <th>
+                            Fecha
+                        </th>
+
+                        <th>
+                            Valor
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="tablaPagos">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- TOTAL -->
+        <!-- ========================================== -->
+
+        <div class="card mt-4">
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <h5>
+
+                            👥 Cantidad de pagos:
+
+                            <strong id="cantidadPagos">
+                                0
+                            </strong>
+
+                        </h5>
+
+                    </div>
+
+
+                    <div class="col-md-6 text-end">
+
+                        <h4>
+
+                            💰 Total acumulado:
+
+                            <strong id="totalAcumulado">
+                                $0
+                            </strong>
+
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- PAGINACIÓN -->
+        <!-- ========================================== -->
+
+        <nav class="mt-4">
+
+            <ul
+                id="paginacion"
+                class="pagination justify-content-center"
+            >
+            </ul>
+
+        </nav>
+
+
+        <!-- ========================================== -->
+        <!-- BOTONES -->
+        <!-- ========================================== -->
+
+        <div class="mt-4">
+
+            <button
+                type="button"
+                class="btn btn-success"
+                onclick="registrarPago()"
+            >
+
+                ➕ Registrar pago del día
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="irInicio()"
+            >
+
+                Inicio
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- ========================================== -->
+
+<!-- PIE DE PÁGINA -->
+
+<!-- ========================================== -->
+
+<div id="footer-container"></div>
+
+<!-- ========================================== -->
+
+<!-- JAVASCRIPT -->
+
+<!-- ========================================== -->
+
+<script>
+
+
+/*
+==========================================================
+CARGAR HEADER
+==========================================================
+*/
+
+fetch("../inc/header.html")
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "No se pudo cargar el header."
+            );
+
+        }
+
+        return response.text();
+
+    })
+
+    .then(function(html) {
+
+        document.getElementById(
+            "header-container"
+        ).innerHTML = html;
+
+    })
+
+    .catch(function(error) {
+
+        console.log(
+            "Error al cargar el header:",
+            error
+        );
+
+    });
+
+
+
+/*
+==========================================================
+CARGAR FOOTER
+==========================================================
+*/
+
+fetch("../inc/footer.html")
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "No se pudo cargar el footer."
+            );
+
+        }
+
+        return response.text();
+
+    })
+
+    .then(function(html) {
+
+        document.getElementById(
+            "footer-container"
+        ).innerHTML = html;
+
+    })
+
+    .catch(function(error) {
+
+        console.log(
+            "Error al cargar el footer:",
+            error
+        );
+
+    });
+
+
+
+/*
+==========================================================
+DATOS DE DEMOSTRACIÓN
+==========================================================
+*/
+
+const pagos = [
+
+    {
+        id: 1,
+        identificacion: "1065632260",
+        nombres: "Juan David",
+        apellidos: "Romero Viloria",
+        telefono: "3100000000",
+        fecha: "01/10/2026",
+        valor: 4000
+    },
+
+    {
+        id: 2,
+        identificacion: "1065897452",
+        nombres: "Carlos",
+        apellidos: "Pérez Gómez",
+        telefono: "3111111111",
+        fecha: "01/10/2026",
+        valor: 5000
+    },
+
+    {
+        id: 3,
+        identificacion: "1065478213",
+        nombres: "María",
+        apellidos: "Rodríguez Díaz",
+        telefono: "3122222222",
+        fecha: "01/10/2026",
+        valor: 4000
+    },
+
+    {
+        id: 4,
+        identificacion: "1065987451",
+        nombres: "Andrés",
+        apellidos: "González López",
+        telefono: "3133333333",
+        fecha: "01/10/2026",
+        valor: 6000
+    },
+
+    {
+        id: 5,
+        identificacion: "1065123698",
+        nombres: "Laura",
+        apellidos: "Martínez Silva",
+        telefono: "3144444444",
+        fecha: "01/10/2026",
+        valor: 5000
+    },
+
+    {
+        id: 6,
+        identificacion: "1065789456",
+        nombres: "Pedro",
+        apellidos: "Mendoza Torres",
+        telefono: "3155555555",
+        fecha: "01/10/2026",
+        valor: 4000
+    },
+
+    {
+        id: 7,
+        identificacion: "1065236547",
+        nombres: "Sofía",
+        apellidos: "Hernández Castro",
+        telefono: "3166666666",
+        fecha: "01/10/2026",
+        valor: 7000
+    },
+
+    {
+        id: 8,
+        identificacion: "1065896321",
+        nombres: "Daniel",
+        apellidos: "García Romero",
+        telefono: "3177777777",
+        fecha: "01/10/2026",
+        valor: 5000
+    },
+
+    {
+        id: 9,
+        identificacion: "1065478963",
+        nombres: "Camila",
+        apellidos: "Suárez Pérez",
+        telefono: "3188888888",
+        fecha: "01/10/2026",
+        valor: 4000
+    },
+
+    {
+        id: 10,
+        identificacion: "1065789632",
+        nombres: "Miguel",
+        apellidos: "Torres Díaz",
+        telefono: "3199999999",
+        fecha: "01/10/2026",
+        valor: 6000
+    },
+
+    {
+        id: 11,
+        identificacion: "1065236987",
+        nombres: "Valentina",
+        apellidos: "Rojas Martínez",
+        telefono: "3201111111",
+        fecha: "01/10/2026",
+        valor: 5000
+    },
+
+    {
+        id: 12,
+        identificacion: "1065987412",
+        nombres: "Sebastián",
+        apellidos: "Morales Gómez",
+        telefono: "3212222222",
+        fecha: "01/10/2026",
+        valor: 4000
+    }
+
+];
+
+
+
+/*
+==========================================================
+CONFIGURACIÓN DE PAGINACIÓN
+==========================================================
+*/
+
+const registrosPorPagina = 5;
+
+let paginaActual = 1;
+
+let pagosFiltrados = [...pagos];
+
+
+
+/*
+==========================================================
+FORMATO DE MONEDA
+==========================================================
+*/
+
+function formatoMoneda(valor) {
+
+    return "$" + valor.toLocaleString(
+        "es-CO"
+    );
+
+}
+
+
+
+/*
+==========================================================
+MOSTRAR PAGOS
+==========================================================
+*/
+
+function mostrarPagos() {
+
+    const tabla =
+        document.getElementById(
+            "tablaPagos"
+        );
+
+
+    tabla.innerHTML = "";
+
+
+    const inicio =
+        (paginaActual - 1)
+        * registrosPorPagina;
+
+
+    const fin =
+        inicio + registrosPorPagina;
+
+
+    const registros =
+        pagosFiltrados.slice(
+            inicio,
+            fin
+        );
+
+
+    /*
+    ==========================================
+    SIN RESULTADOS
+    ==========================================
+    */
+
+    if (registros.length === 0) {
+
+        tabla.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="text-center"
+                >
+
+                    No hay pagos registrados.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        actualizarResumen();
+
+        mostrarPaginacion();
+
+        return;
+
+    }
+
+
+    /*
+    ==========================================
+    CREAR FILAS
+    ==========================================
+    */
+
+    registros.forEach(function(pago) {
+
+        const fila =
+            document.createElement("tr");
+
+
+        fila.innerHTML = `
+
+            <td>
+                ${pago.id}
+            </td>
+
+            <td>
+                ${pago.identificacion}
+            </td>
+
+            <td>
+                ${pago.nombres}
+                ${pago.apellidos}
+            </td>
+
+            <td>
+                ${pago.telefono}
+            </td>
+
+            <td>
+                ${pago.fecha}
+            </td>
+
+            <td>
+
+                <strong>
+                    ${formatoMoneda(pago.valor)}
+                </strong>
+
+            </td>
+
+        `;
+
+
+        tabla.appendChild(fila);
+
+    });
+
+
+    actualizarResumen();
+
+    mostrarPaginacion();
+
+}
+
+
+
+/*
+==========================================================
+ACTUALIZAR RESUMEN
+==========================================================
+*/
+
+function actualizarResumen() {
+
+    const cantidad =
+        pagosFiltrados.length;
+
+
+    const total =
+        pagosFiltrados.reduce(
+            function(acumulado, pago) {
+
+                return acumulado + pago.valor;
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "cantidadPagos"
+    ).textContent = cantidad;
+
+
+    document.getElementById(
+        "totalAcumulado"
+    ).textContent =
+        formatoMoneda(total);
+
+}
+
+
+
+/*
+==========================================================
+PAGINACIÓN
+==========================================================
+*/
+
+function mostrarPaginacion() {
+
+    const contenedor =
+        document.getElementById(
+            "paginacion"
+        );
+
+
+    contenedor.innerHTML = "";
+
+
+    const totalPaginas =
+        Math.ceil(
+            pagosFiltrados.length
+            / registrosPorPagina
+        );
+
+
+    if (totalPaginas <= 1) {
+
+        return;
+
+    }
+
+
+    /*
+    ==========================================
+    BOTÓN ANTERIOR
+    ==========================================
+    */
+
+    const anterior =
+        document.createElement("li");
+
+
+    anterior.className =
+        "page-item";
+
+
+    if (paginaActual === 1) {
+
+        anterior.classList.add(
+            "disabled"
+        );
+
+    }
+
+
+    anterior.innerHTML = `
+
+        <button
+            class="page-link"
+            type="button"
+            onclick="cambiarPagina(${paginaActual - 1})"
+        >
+
+            Anterior
+
+        </button>
+
+    `;
+
+
+    contenedor.appendChild(anterior);
+
+
+
+    /*
+    ==========================================
+    NÚMEROS DE PÁGINA
+    ==========================================
+    */
+
+    for (
+        let pagina = 1;
+        pagina <= totalPaginas;
+        pagina++
+    ) {
+
+        const elemento =
+            document.createElement("li");
+
+
+        elemento.className =
+            "page-item";
+
+
+        if (
+            pagina === paginaActual
+        ) {
+
+            elemento.classList.add(
+                "active"
+            );
+
+        }
+
+
+        elemento.innerHTML = `
+
+            <button
+                class="page-link"
+                type="button"
+                onclick="cambiarPagina(${pagina})"
+            >
+
+                ${pagina}
+
+            </button>
+
+        `;
+
+
+        contenedor.appendChild(
+            elemento
+        );
+
+    }
+
+
+
+    /*
+    ==========================================
+    BOTÓN SIGUIENTE
+    ==========================================
+    */
+
+    const siguiente =
+        document.createElement("li");
+
+
+    siguiente.className =
+        "page-item";
+
+
+    if (
+        paginaActual === totalPaginas
+    ) {
+
+        siguiente.classList.add(
+            "disabled"
+        );
+
+    }
+
+
+    siguiente.innerHTML = `
+
+        <button
+            class="page-link"
+            type="button"
+            onclick="cambiarPagina(${paginaActual + 1})"
+        >
+
+            Siguiente
+
+        </button>
+
+    `;
+
+
+    contenedor.appendChild(
+        siguiente
+    );
+
+}
+
+
+
+/*
+==========================================================
+CAMBIAR PÁGINA
+==========================================================
+*/
+
+function cambiarPagina(pagina) {
+
+    const totalPaginas =
+        Math.ceil(
+            pagosFiltrados.length
+            / registrosPorPagina
+        );
+
+
+    if (
+        pagina < 1 ||
+        pagina > totalPaginas
+    ) {
+
+        return;
+
+    }
+
+
+    paginaActual = pagina;
+
+    mostrarPagos();
+
+}
+
+
+
+/*
+==========================================================
+BUSCAR PAGOS
+==========================================================
+*/
+
+function buscarPagos() {
+
+    const texto =
+        document.getElementById(
+            "buscarPago"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    pagosFiltrados =
+        pagos.filter(function(pago) {
+
+            const documento =
+                pago.identificacion
+                .toLowerCase();
+
+
+            const nombre =
+                (
+                    pago.nombres
+                    + " "
+                    + pago.apellidos
+                )
+                .toLowerCase();
+
+
+            return (
+                documento.includes(texto)
+                ||
+                nombre.includes(texto)
+            );
+
+        });
+
+
+    paginaActual = 1;
+
+    mostrarPagos();
+
+}
+
+
+
+/*
+==========================================================
+BUSCAR AUTOMÁTICAMENTE AL ESCRIBIR
+==========================================================
+*/
+
+document
+    .getElementById("buscarPago")
+    .addEventListener(
+        "input",
+        buscarPagos
+    );
+
+
+
+/*
+==========================================================
+REGISTRAR PAGO
+==========================================================
+*/
+
+function registrarPago() {
+
+    alert(
+        "➕ REGISTRAR PAGO\n\n"
+        +
+        "Esta opción es demostrativa.\n\n"
+        +
+        "El pago no será guardado en una base de datos."
+    );
+
+}
+
+
+
+/*
+==========================================================
+IR AL INICIO
+==========================================================
+*/
+
+function irInicio() {
+
+    window.location.href =
+        "../index.html";
+
+}
+
+
+
+/*
+==========================================================
+CARGAR PAGOS AL ABRIR LA PÁGINA
+==========================================================
+*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        mostrarPagos();
+
+    }
+);
+
+</script>
+
+<!-- ========================================== -->
+
+<!-- BOOTSTRAP -->
+
+<!-- ========================================== -->
+
+<script src="../js/bootstrap.bundle.js"></script>
+
+</body>
+
+</html>
+
+

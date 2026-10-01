@@ -1,0 +1,548 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>✏️ Actualizar Proveedor | Gym Guajira</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
+    <link rel="stylesheet" href="../css/style.css?v=1001">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header-container"></div>
+
+
+    <main class="pagina-formulario">
+
+        <div class="formulario-contenedor">
+
+
+            <!-- ==========================================
+                 ENCABEZADO
+            =========================================== -->
+
+            <div class="formulario-header">
+
+                <div class="formulario-icono">
+                    ✏️
+                </div>
+
+                <div>
+
+                    <h1>
+                        Actualizar Proveedor
+                    </h1>
+
+                    <p>
+                        Modifica los datos del proveedor
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 FORMULARIO
+            =========================================== -->
+
+            <form id="formularioProveedor" autocomplete="off">
+
+
+                <!-- ==========================================
+                     INFORMACIÓN DEL PROVEEDOR
+                =========================================== -->
+
+                <div class="seccion-formulario">
+
+                    <div class="titulo-seccion">
+
+                        <span>01</span>
+
+                        <div>
+
+                            <h3>
+                                Información del proveedor
+                            </h3>
+
+                            <p>
+                                Datos básicos del proveedor
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+
+                        <!-- NOMBRE -->
+
+                        <div class="col-md-6">
+
+                            <label for="nombre">
+                                Nombre
+                            </label>
+
+                            <div class="campo-icono">
+
+                                <span>👤</span>
+
+                                <input
+                                    type="text"
+                                    id="nombre"
+                                    class="form-control estilodecampos"
+                                    placeholder="Ej. Juan David"
+                                    value="Proveedor Gym Guajira"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- TIPO -->
+
+                        <div class="col-md-6">
+
+                            <label for="tipo">
+                                Tipo de identificación
+                            </label>
+
+                            <select
+                                class="form-select estilodecampos"
+                                id="tipo"
+                                required>
+
+                                <option value="">
+                                    Seleccione una opción
+                                </option>
+
+                                <option value="CC" selected>
+                                    Cédula de ciudadanía
+                                </option>
+
+                                <option value="NIT">
+                                    NIT
+                                </option>
+
+                                <option value="CE">
+                                    Cédula de extranjería
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- IDENTIFICACIÓN -->
+
+                        <div class="col-md-6">
+
+                            <label for="identificacion">
+                                Número de identificación
+                            </label>
+
+                            <div class="campo-icono">
+
+                                <span>🪪</span>
+
+                                <input
+                                    type="text"
+                                    id="identificacion"
+                                    class="form-control estilodecampos"
+                                    placeholder="Ej. 900001"
+                                    value="900001"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- TELÉFONO -->
+
+                        <div class="col-md-6">
+
+                            <label for="telefono">
+                                Teléfono
+                            </label>
+
+                            <div class="campo-icono">
+
+                                <span>📱</span>
+
+                                <input
+                                    type="tel"
+                                    id="telefono"
+                                    class="form-control estilodecampos"
+                                    placeholder="Ej. 3100000000"
+                                    value="3100000000"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="col-md-6">
+
+                            <label for="correo">
+                                Correo electrónico
+                            </label>
+
+                            <div class="campo-icono">
+
+                                <span>✉️</span>
+
+                                <input
+                                    type="email"
+                                    id="correo"
+                                    class="form-control estilodecampos"
+                                    placeholder="Ej. proveedor@gmail.com"
+                                    value="proveedor@gmail.com"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- DIRECCIÓN -->
+
+                        <div class="col-md-6">
+
+                            <label for="direccion">
+                                Dirección
+                            </label>
+
+                            <div class="campo-icono">
+
+                                <span>📍</span>
+
+                                <input
+                                    type="text"
+                                    id="direccion"
+                                    class="form-control estilodecampos"
+                                    placeholder="Ej. Calle 10 # 20-30"
+                                    value="Calle 10 # 20-30"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==========================================
+                     ESTADO
+                =========================================== -->
+
+                <div class="seccion-formulario">
+
+                    <div class="titulo-seccion">
+
+                        <span>02</span>
+
+                        <div>
+
+                            <h3>
+                                Estado del proveedor
+                            </h3>
+
+                            <p>
+                                Estado actual del proveedor
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+
+                            <label for="estado">
+                                Estado
+                            </label>
+
+                            <select
+                                class="form-select estilodecampos"
+                                id="estado"
+                                required>
+
+                                <option value="1" selected>
+                                    Activo
+                                </option>
+
+                                <option value="0">
+                                    Inactivo
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==========================================
+                     BOTONES
+                =========================================== -->
+
+                <div class="acciones-formulario">
+
+                    <a
+                        href="../index.html"
+                        class="btn-cancelar">
+
+                        Cancelar
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="btn-guardar">
+
+                        <span>✓</span>
+
+                        Actualizar Proveedor
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+         SIN BASE DE DATOS
+    =========================================== -->
+
+    <script>
+
+        /* ==========================================
+           CARGAR HEADER
+        =========================================== */
+
+        fetch("../inc/header.html")
+            .then(response => response.text())
+            .then(data => {
+
+                document.getElementById("header-container").innerHTML = data;
+
+            })
+            .catch(error => {
+
+                console.error("Error al cargar el header:", error);
+
+            });
+
+
+
+        /* ==========================================
+           CARGAR FOOTER
+        =========================================== */
+
+        fetch("../inc/footer.html")
+            .then(response => response.text())
+            .then(data => {
+
+                document.getElementById("footer-container").innerHTML = data;
+
+            })
+            .catch(error => {
+
+                console.error("Error al cargar el footer:", error);
+
+            });
+
+
+
+        /* ==========================================
+           ACTUALIZAR PROVEEDOR
+        =========================================== */
+
+        document
+            .getElementById("formularioProveedor")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+
+                const nombre =
+                    document.getElementById("nombre").value.trim();
+
+                const tipo =
+                    document.getElementById("tipo").value;
+
+                const identificacion =
+                    document.getElementById("identificacion").value.trim();
+
+                const telefono =
+                    document.getElementById("telefono").value.trim();
+
+                const correo =
+                    document.getElementById("correo").value.trim();
+
+                const direccion =
+                    document.getElementById("direccion").value.trim();
+
+                const estado =
+                    document.getElementById("estado").value;
+
+
+
+                /* VALIDAR CAMPOS */
+
+                if (
+                    nombre === "" ||
+                    tipo === "" ||
+                    identificacion === "" ||
+                    telefono === "" ||
+                    correo === "" ||
+                    direccion === "" ||
+                    estado === ""
+                ) {
+
+                    alert(
+                        "⚠️ Por favor completa todos los campos."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* VALIDAR TELÉFONO */
+
+                if (telefono.length < 7) {
+
+                    alert(
+                        "⚠️ Ingresa un número de teléfono válido."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* TEXTO DEL ESTADO */
+
+                const estadoTexto =
+                    estado === "1"
+                        ? "Activo"
+                        : "Inactivo";
+
+
+
+                /* MENSAJE DE ACTUALIZACIÓN */
+
+                alert(
+
+                    "✅ Proveedor actualizado correctamente.\n\n" +
+
+                    "Proveedor: " +
+                    nombre +
+                    "\n" +
+
+                    "Identificación: " +
+                    tipo +
+                    " " +
+                    identificacion +
+                    "\n" +
+
+                    "Teléfono: " +
+                    telefono +
+                    "\n" +
+
+                    "Correo: " +
+                    correo +
+                    "\n" +
+
+                    "Estado: " +
+                    estadoTexto +
+
+                    "\n\n" +
+
+                    "Esta actualización es demostrativa y no se guarda en una base de datos."
+
+                );
+
+            });
+
+
+
+        /* ==========================================
+           SOLO PERMITIR NÚMEROS
+           EN IDENTIFICACIÓN Y TELÉFONO
+        =========================================== */
+
+        document
+            .getElementById("identificacion")
+            .addEventListener("input", function() {
+
+                this.value =
+                    this.value.replace(/\D/g, "");
+
+            });
+
+
+        document
+            .getElementById("telefono")
+            .addEventListener("input", function() {
+
+                this.value =
+                    this.value.replace(/\D/g, "");
+
+            });
+
+    </script>
+
+
+</body>
+
+</html>
+```
+

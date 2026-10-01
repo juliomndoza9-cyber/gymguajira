@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>👤 Registrar Cliente | Gym Guajira</title>
+
+<link rel="stylesheet" href="../css/bootstrap.css">
+<link rel="stylesheet" href="../css/style.css?v=1001">
+```
+
+</head>
+
+<body>
+
+```
+<!-- ==============================
+     ENCABEZADO
+=============================== -->
+
+<div id="header-container"></div>
+
+
+
+<!-- ==============================
+     CONTENIDO
+=============================== -->
+
+<main class="pagina-formulario">
+
+    <div class="formulario-contenedor">
+
+
+        <!-- ENCABEZADO DEL FORMULARIO -->
+
+        <div class="formulario-header">
+
+            <div class="formulario-icono">
+                👤
+            </div>
+
+            <div>
+
+                <h1>
+                    Registrar cliente
+                </h1>
+
+                <p>
+                    Ingresa los datos del nuevo cliente
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FORMULARIO -->
+
+        <form
+            id="formularioCliente"
+            autocomplete="off">
+
+
+            <!-- ==============================
+                 INFORMACIÓN PERSONAL
+            =============================== -->
+
+            <div class="seccion-formulario">
+
+                <div class="titulo-seccion">
+
+                    <span>01</span>
+
+                    <div>
+
+                        <h3>
+                            Información personal
+                        </h3>
+
+                        <p>
+                            Datos básicos del cliente
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- NOMBRES -->
+
+                    <div class="col-md-6">
+
+                        <label for="nombre">
+                            Nombres
+                        </label>
+
+                        <div class="campo-icono">
+
+                            <span>👤</span>
+
+                            <input
+                                type="text"
+                                id="nombre"
+                                class="form-control estilodecampos"
+                                placeholder="Ej. Juan David"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- APELLIDOS -->
+
+                    <div class="col-md-6">
+
+                        <label for="apellido">
+                            Apellidos
+                        </label>
+
+                        <div class="campo-icono">
+
+                            <span>👤</span>
+
+                            <input
+                                type="text"
+                                id="apellido"
+                                class="form-control estilodecampos"
+                                placeholder="Ej. Romero Viloria"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==============================
+                 INFORMACIÓN DE CONTACTO
+            =============================== -->
+
+            <div class="seccion-formulario">
+
+                <div class="titulo-seccion">
+
+                    <span>02</span>
+
+                    <div>
+
+                        <h3>
+                            Información de contacto
+                        </h3>
+
+                        <p>
+                            Datos para comunicarse con el cliente
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- CELULAR -->
+
+                    <div class="col-md-6">
+
+                        <label for="celular">
+                            Número de celular
+                        </label>
+
+                        <div class="campo-icono">
+
+                            <span>📱</span>
+
+                            <input
+                                type="tel"
+                                id="celular"
+                                class="form-control estilodecampos"
+                                placeholder="Ej. 3100000000"
+                                maxlength="10"
+                                inputmode="numeric"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CORREO -->
+
+                    <div class="col-md-6">
+
+                        <label for="correo">
+                            Correo electrónico
+                        </label>
+
+                        <div class="campo-icono">
+
+                            <span>✉️</span>
+
+                            <input
+                                type="email"
+                                id="correo"
+                                class="form-control estilodecampos"
+                                placeholder="Ej. cliente@gmail.com"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DIRECCIÓN -->
+
+                    <div class="col-12">
+
+                        <label for="direccion">
+                            Dirección
+                        </label>
+
+                        <div class="campo-icono">
+
+                            <span>📍</span>
+
+                            <input
+                                type="text"
+                                id="direccion"
+                                class="form-control estilodecampos"
+                                placeholder="Ej. Calle 10 # 20-30"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==============================
+                 DOCUMENTACIÓN
+            =============================== -->
+
+            <div class="seccion-formulario">
+
+                <div class="titulo-seccion">
+
+                    <span>03</span>
+
+                    <div>
+
+                        <h3>
+                            Documento de identificación
+                        </h3>
+
+                        <p>
+                            Información del documento del cliente
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- TIPO -->
+
+                    <div class="col-md-6">
+
+                        <label for="tipo">
+                            Tipo de identificación
+                        </label>
+
+                        <select
+                            class="form-select estilodecampos"
+                            id="tipo"
+                            required>
+
+                            <option
+                                value=""
+                                selected
+                                disabled>
+
+                                Seleccione una opción
+
+                            </option>
+
+                            <option value="CC">
+                                Cédula de ciudadanía
+                            </option>
+
+                            <option value="TI">
+                                Tarjeta de identidad
+                            </option>
+
+                            <option value="CE">
+                                Cédula de extranjería
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- IDENTIFICACIÓN -->
+
+                    <div class="col-md-6">
+
+                        <label for="identificacion">
+                            Número de identificación
+                        </label>
+
+                        <div class="campo-icono">
+
+                            <span>🪪</span>
+
+                            <input
+                                type="text"
+                                id="identificacion"
+                                class="form-control estilodecampos"
+                                placeholder="Ej. 1065632260"
+                                inputmode="numeric"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==============================
+                 BOTONES
+            =============================== -->
+
+            <div class="formulario-botones">
+
+                <a
+                    href="../index.html"
+                    class="btn-cancelar">
+
+                    Cancelar
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn-guardar">
+
+                    👤 Registrar cliente
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</main>
+
+
+
+<!-- ==============================
+     PIE DE PÁGINA
+=============================== -->
+
+<div id="footer-container"></div>
+
+
+
+<!-- ==============================
+     JAVASCRIPT
+     SIN BASE DE DATOS
+=============================== -->
+
+<script>
+
+    /* ==========================================
+       CARGAR HEADER Y FOOTER
+    ========================================== */
+
+    fetch("../inc/header.html")
+        .then(function(response) {
+
+            if (!response.ok) {
+                throw new Error("No se pudo cargar el header.");
+            }
+
+            return response.text();
+
+        })
+        .then(function(html) {
+
+            document.getElementById(
+                "header-container"
+            ).innerHTML = html;
+
+        })
+        .catch(function(error) {
+
+            console.log(
+                "Header no disponible:",
+                error
+            );
+
+        });
+
+
+    fetch("../inc/footer.html")
+        .then(function(response) {
+
+            if (!response.ok) {
+                throw new Error("No se pudo cargar el footer.");
+            }
+
+            return response.text();
+
+        })
+        .then(function(html) {
+
+            document.getElementById(
+                "footer-container"
+            ).innerHTML = html;
+
+        })
+        .catch(function(error) {
+
+            console.log(
+                "Footer no disponible:",
+                error
+            );
+
+        });
+
+
+
+    /* ==========================================
+       FORMULARIO
+    ========================================== */
+
+    const formulario =
+        document.getElementById(
+            "formularioCliente"
+        );
+
+
+    formulario.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const nombre =
+                document.getElementById(
+                    "nombre"
+                ).value.trim();
+
+
+            const apellido =
+                document.getElementById(
+                    "apellido"
+                ).value.trim();
+
+
+            const celular =
+                document.getElementById(
+                    "celular"
+                ).value.trim();
+
+
+            const correo =
+                document.getElementById(
+                    "correo"
+                ).value.trim();
+
+
+            const direccion =
+                document.getElementById(
+                    "direccion"
+                ).value.trim();
+
+
+            const tipo =
+                document.getElementById(
+                    "tipo"
+                ).value;
+
+
+            const identificacion =
+                document.getElementById(
+                    "identificacion"
+                ).value.trim();
+
+
+
+            /* ==================================
+               VALIDAR CAMPOS
+            ================================== */
+
+            if (
+                !nombre ||
+                !apellido ||
+                !celular ||
+                !correo ||
+                !direccion ||
+                !tipo ||
+                !identificacion
+            ) {
+
+                alert(
+                    "⚠️ Por favor completa todos los campos."
+                );
+
+                return;
+
+            }
+
+
+
+            /* ==================================
+               VALIDAR CELULAR
+            ================================== */
+
+            if (
+                !/^\d{10}$/.test(celular)
+            ) {
+
+                alert(
+                    "⚠️ El número de celular debe tener 10 dígitos."
+                );
+
+                return;
+
+            }
+
+
+
+            /* ==================================
+               CONFIRMACIÓN
+            ================================== */
+
+            alert(
+
+                "✅ Cliente registrado correctamente.\n\n" +
+
+                "Nombre: " +
+                nombre +
+                " " +
+                apellido +
+
+                "\nIdentificación: " +
+                tipo +
+                " " +
+                identificacion +
+
+                "\nCelular: " +
+                celular +
+
+                "\nCorreo: " +
+                correo +
+
+                "\n\n" +
+
+                "ℹ️ Registro de demostración. " +
+                "Los datos no se guardan en una base de datos."
+
+            );
+
+
+
+            /* ==================================
+               LIMPIAR FORMULARIO
+            ================================== */
+
+            formulario.reset();
+
+
+            document
+                .getElementById("nombre")
+                .focus();
+
+        }
+    );
+
+
+
+    /* ==========================================
+       SOLO NÚMEROS EN CELULAR
+    ========================================== */
+
+    document
+        .getElementById("celular")
+        .addEventListener(
+            "input",
+            function() {
+
+                this.value =
+                    this.value.replace(
+                        /\D/g,
+                        ""
+                    );
+
+            }
+        );
+
+
+    /* ==========================================
+       SOLO NÚMEROS EN IDENTIFICACIÓN
+    ========================================== */
+
+    document
+        .getElementById("identificacion")
+        .addEventListener(
+            "input",
+            function() {
+
+                this.value =
+                    this.value.replace(
+                        /\D/g,
+                        ""
+                    );
+
+            }
+        );
+
+</script>
+```
+
+</body>
+
+</html>
+
+```

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>📋 Detalle del balance | Gym Guajira</title>
+
+<link
+    rel="stylesheet"
+    href="../static/css/bootstrap.css">
+
+<link
+    rel="stylesheet"
+    href="../static/css/style.css">
+```
+
+</head>
+
+<body>
+
+<!-- ==============================
+     HEADER
+     Se reemplazará por el header
+     estático definitivo.
+=============================== -->
+
+<header>
+
+```
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand"
+            href="../index.html">
+
+            🏋️ Gym Guajira
+
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+            aria-controls="navbarMenu"
+            aria-expanded="false"
+            aria-label="Mostrar menú">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto">
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="../index.html">
+
+                        Inicio
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="../clientes/clientes.html">
+
+                        Clientes
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="../mensualidades/mensualidades.html">
+
+                        Mensualidades
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="../pagos/pagos-dia.html">
+
+                        Pagos del día
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="balance.html">
+
+                        Balance del mes
+
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+```
+
+</header>
+
+<div class="container mt-5 mb-5">
+
+```
+<div class="card shadow">
+
+
+    <!-- ==============================
+         ENCABEZADO
+    =============================== -->
+
+    <div class="card-header text-center">
+
+        <h3>
+            📋 Detalle del balance
+        </h3>
+
+        <p
+            class="mb-0"
+            id="mesConsultado">
+
+            Mes consultado: Octubre 2026
+
+        </p>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <!-- ==============================
+             RESUMEN
+        =============================== -->
+
+        <div class="row text-center mb-4">
+
+
+            <!-- TOTAL -->
+
+            <div class="col-md-4">
+
+                <div class="alert alert-success">
+
+                    <strong>
+                        Total:
+                    </strong>
+
+                    <br>
+
+                    <span id="totalMes">
+                        $124.000
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CLIENTES -->
+
+            <div class="col-md-4">
+
+                <div class="alert alert-info">
+
+                    <strong>
+                        Clientes:
+                    </strong>
+
+                    <br>
+
+                    <span id="clientesAtendidos">
+                        3
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- REGISTROS -->
+
+            <div class="col-md-4">
+
+                <div class="alert alert-secondary">
+
+                    <strong>
+                        Registros:
+                    </strong>
+
+                    <br>
+
+                    <span id="cantidadRegistros">
+                        3
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             TABLA DE DETALLE
+        =============================== -->
+
+        <div class="table-responsive">
+
+            <table
+                class="table table-bordered table-striped text-center align-middle">
+
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Fecha</th>
+
+                        <th>Cédula</th>
+
+                        <th>Cliente</th>
+
+                        <th>Tipo</th>
+
+                        <th>Valor</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <!-- REGISTRO 1 -->
+
+                    <tr>
+
+                        <td>1</td>
+
+                        <td>
+                            01/10/2026
+                        </td>
+
+                        <td>
+                            1000001
+                        </td>
+
+                        <td>
+                            Juan David Romero
+                        </td>
+
+                        <td>
+                            Mensualidad
+                        </td>
+
+                        <td>
+                            $60.000
+                        </td>
+
+                    </tr>
+
+
+                    <!-- REGISTRO 2 -->
+
+                    <tr>
+
+                        <td>2</td>
+
+                        <td>
+                            02/10/2026
+                        </td>
+
+                        <td>
+                            1000002
+                        </td>
+
+                        <td>
+                            Carlos Pérez
+                        </td>
+
+                        <td>
+                            Pago del día
+                        </td>
+
+                        <td>
+                            $4.000
+                        </td>
+
+                    </tr>
+
+
+                    <!-- REGISTRO 3 -->
+
+                    <tr>
+
+                        <td>3</td>
+
+                        <td>
+                            03/10/2026
+                        </td>
+
+                        <td>
+                            1000003
+                        </td>
+
+                        <td>
+                            María Rodríguez
+                        </td>
+
+                        <td>
+                            Mensualidad
+                        </td>
+
+                        <td>
+                            $60.000
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ==============================
+             BOTONES
+        =============================== -->
+
+        <div class="text-center mt-4">
+
+
+            <a
+                href="../index.html"
+                class="btn btn-primary">
+
+                ← Volver al inicio
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="registrarPago()"
+                class="btn btn-success">
+
+                💰 Registrar pago
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- ==============================
+     FOOTER
+=============================== -->
+
+<footer class="text-center mt-5 mb-3">
+
+```
+<p>
+    © 2026 Gym Guajira
+</p>
+```
+
+</footer>
+
+<!-- ==============================
+     JAVASCRIPT
+     SIN BASE DE DATOS
+=============================== -->
+
+<script>
+
+    function registrarPago() {
+
+        alert(
+            "💰 Esta opción es únicamente demostrativa. " +
+            "El pago no se guarda en una base de datos."
+        );
+
+    }
+
+</script>
+
+</body>
+
+</html>
+

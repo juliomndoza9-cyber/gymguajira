@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>📊 Balance del mes | Gym Guajira</title>
+
+<link rel="stylesheet" href="../static/css/bootstrap.css">
+<link rel="stylesheet" href="../static/css/style.css">
+```
+
+</head>
+
+<body>
+
+<!-- ==============================
+     HEADER
+     Se reemplazará por el header
+     estático cuando lo envíes.
+=============================== -->
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+
+```
+        <a class="navbar-brand" href="../index.html">
+            🏋️ Gym Guajira
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+            aria-controls="navbarMenu"
+            aria-expanded="false"
+            aria-label="Mostrar menú">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html">
+                        Inicio
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../clientes/clientes.html">
+                        Clientes
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../mensualidades/mensualidades.html">
+                        Mensualidades
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../pagos/pagos-dia.html">
+                        Pagos del día
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="balance.html">
+                        Balance del mes
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+```
+
+</header>
+
+<div class="container mt-5 mb-5">
+
+```
+<div class="card shadow">
+
+    <div class="card-header text-center">
+
+        <h3>📊 Balance del mes</h3>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+        <!-- ==============================
+             SELECCIONAR MES
+        =============================== -->
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-8">
+
+                <label class="form-label">
+                    Seleccionar mes
+                </label>
+
+                <input
+                    type="month"
+                    id="mes"
+                    class="form-control">
+
+            </div>
+
+
+            <div class="col-md-4 d-flex align-items-end">
+
+                <button
+                    type="button"
+                    onclick="consultarBalance()"
+                    class="btn btn-primary w-100">
+
+                    🔎 Consultar balance
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             TARJETAS PRINCIPALES
+        =============================== -->
+
+        <div class="row g-4">
+
+
+            <!-- TOTAL -->
+
+            <div class="col-md-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body text-center">
+
+                        <h5>💰 Total del mes</h5>
+
+                        <h2 id="totalMes">
+                            $0
+                        </h2>
+
+                        <small>
+                            Pagos del día + mensualidades
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CLIENTES -->
+
+            <div class="col-md-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body text-center">
+
+                        <h5>👥 Clientes atendidos</h5>
+
+                        <h2 id="clientesAtendidos">
+                            0
+                        </h2>
+
+                        <small>
+                            Clientes diferentes durante el mes
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAGOS DEL DÍA -->
+
+            <div class="col-md-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body text-center">
+
+                        <h5>🎟️ Pagos del día</h5>
+
+                        <h2 id="cantidadPagosDia">
+                            0
+                        </h2>
+
+                        <small>
+                            Total: $<span id="totalPagosDia">0</span>
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             INFORMACIÓN DE PAGOS
+        =============================== -->
+
+        <div class="row g-4 mt-1">
+
+
+            <!-- MENSUALIDADES -->
+
+            <div class="col-md-6">
+
+                <div class="alert alert-info text-center">
+
+                    <strong>
+                        🏋️ Mensualidades:
+                    </strong>
+
+                    <span id="cantidadMensualidades">
+                        0
+                    </span>
+
+                    <br>
+
+                    <strong>
+                        Valor:
+                    </strong>
+
+                    $<span id="totalMensualidades">
+                        0
+                    </span>
+
+                    <br>
+
+                    <small>
+                        $60.000 cada mensualidad
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- CLIENTES PAGO DEL DÍA -->
+
+            <div class="col-md-6">
+
+                <div class="alert alert-secondary text-center">
+
+                    <strong>
+                        👤 Clientes con pago del día:
+                    </strong>
+
+                    <span id="clientesDia">
+                        0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             RESUMEN
+        =============================== -->
+
+        <div class="alert alert-success mt-3 text-center">
+
+            <strong>
+                💵 Resumen:
+            </strong>
+
+            cada mensualidad registrada se contabiliza por
+            $60.000 en el balance.
+
+            Los pagos del día tienen un valor de $4.000.
+
+        </div>
+
+
+        <!-- ==============================
+             TABLA
+        =============================== -->
+
+        <div class="table-responsive mt-4">
+
+            <table class="table table-bordered table-hover text-center align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Fecha</th>
+
+                        <th>Cédula</th>
+
+                        <th>Cliente</th>
+
+                        <th>Tipo de pago</th>
+
+                        <th>Valor</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="tablaBalance">
+
+                    <tr>
+
+                        <td>
+                            01/10/2026
+                        </td>
+
+                        <td>
+                            1000001
+                        </td>
+
+                        <td>
+                            Juan David Romero
+                        </td>
+
+                        <td>
+                            Mensualidad
+                        </td>
+
+                        <td>
+                            $60.000
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            02/10/2026
+                        </td>
+
+                        <td>
+                            1000002
+                        </td>
+
+                        <td>
+                            Carlos Pérez
+                        </td>
+
+                        <td>
+                            Pago del día
+                        </td>
+
+                        <td>
+                            $4.000
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            03/10/2026
+                        </td>
+
+                        <td>
+                            1000003
+                        </td>
+
+                        <td>
+                            María Rodríguez
+                        </td>
+
+                        <td>
+                            Mensualidad
+                        </td>
+
+                        <td>
+                            $60.000
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ==============================
+             BOTONES
+        =============================== -->
+
+        <div class="text-center mt-4">
+
+
+            <button
+                type="button"
+                onclick="verDetalle()"
+                class="btn btn-primary">
+
+                📋 Ver detalle
+
+            </button>
+
+
+            <button
+                type="button"
+                onclick="registrarPago()"
+                class="btn btn-success">
+
+                💰 Registrar pago del día
+
+            </button>
+
+
+            <a
+                href="../index.html"
+                class="btn btn-secondary">
+
+                Inicio
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- ==============================
+     FOOTER
+     Se reemplazará por el footer
+     estático cuando lo envíes.
+=============================== -->
+
+<footer class="text-center mt-5 mb-3">
+
+```
+<p>
+    © 2026 Gym Guajira
+</p>
+```
+
+</footer>
+
+<!-- ==============================
+     JAVASCRIPT
+     SIN BASE DE DATOS
+=============================== -->
+
+<script>
+
+    function consultarBalance() {
+
+        const mes = document.getElementById("mes").value;
+
+        if (!mes) {
+
+            alert("📅 Selecciona un mes para consultar.");
+
+            return;
+
+        }
+
+
+        /*
+         * Datos de demostración.
+         * No se consulta ninguna base de datos.
+         */
+
+        const mensualidades = 2;
+        const valorMensualidad = 60000;
+
+        const pagosDia = 1;
+        const valorPagoDia = 4000;
+
+        const clientes = 3;
+
+
+        const totalMensualidades =
+            mensualidades * valorMensualidad;
+
+        const totalPagosDia =
+            pagosDia * valorPagoDia;
+
+        const total =
+            totalMensualidades + totalPagosDia;
+
+
+        document.getElementById("totalMes").textContent =
+            "$" + total.toLocaleString("es-CO");
+
+        document.getElementById("clientesAtendidos").textContent =
+            clientes;
+
+        document.getElementById("cantidadPagosDia").textContent =
+            pagosDia;
+
+        document.getElementById("totalPagosDia").textContent =
+            totalPagosDia.toLocaleString("es-CO");
+
+        document.getElementById("cantidadMensualidades").textContent =
+            mensualidades;
+
+        document.getElementById("totalMensualidades").textContent =
+            totalMensualidades.toLocaleString("es-CO");
+
+        document.getElementById("clientesDia").textContent =
+            pagosDia;
+
+
+        alert(
+            "✅ Balance de demostración cargado para el mes seleccionado."
+        );
+
+    }
+
+
+    function verDetalle() {
+
+        alert(
+            "📋 Esta opción muestra un detalle de demostración. " +
+            "No consulta ninguna base de datos."
+        );
+
+    }
+
+
+    function registrarPago() {
+
+        alert(
+            "💰 Esta opción es únicamente demostrativa. " +
+            "El pago no se guarda en una base de datos."
+        );
+
+    }
+
+</script>
+
+</body>
+
+</html>

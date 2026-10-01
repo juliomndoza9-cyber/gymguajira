@@ -1,0 +1,1015 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registrar mensualidad | Gym Guajira</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
+    <link rel="stylesheet" href="../css/style.css?v=1001">
+
+
+    <style>
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .contenedor-mensualidad {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+        }
+
+        .titulo-mensualidad {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .titulo-mensualidad span {
+            font-size: 30px;
+        }
+
+        .grupo-documento {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .grupo-documento .campo-documento {
+            flex: 1;
+        }
+
+        .boton-buscar {
+            height: 38px;
+            min-width: 50px;
+            border: none;
+            border-radius: 8px;
+            background-color: #198754;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .boton-buscar:hover {
+            background-color: #157347;
+        }
+
+        .boton-buscar:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .datos-cliente {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+        }
+
+        .datos-cliente h5 {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .campo input,
+        .campo select {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 7px;
+            background-color: white;
+        }
+
+        .campo input:disabled,
+        .campo select:disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        .fechas-mensualidad {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+        }
+
+        .fechas-mensualidad h5 {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .info-mensualidad {
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #e9f7ef;
+            color: #146c43;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .mensaje {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .mensaje.error {
+            display: block;
+            background-color: #f8d7da;
+            color: #842029;
+        }
+
+        .mensaje.exito {
+            display: block;
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .botones {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-cancelar {
+            text-decoration: none;
+        }
+
+        .btn-registrar {
+            min-width: 190px;
+        }
+
+        @media (max-width: 600px) {
+
+            .contenedor-mensualidad {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+
+            .grupo-documento {
+                align-items: stretch;
+            }
+
+            .boton-buscar {
+                height: 38px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         ENCABEZADO
+    =========================================== -->
+
+    <div id="header-container"></div>
+
+
+
+    <!-- ==========================================
+         CONTENIDO
+    =========================================== -->
+
+    <div class="contenedor-mensualidad">
+
+        <div class="titulo-mensualidad">
+
+            <span>🏋️</span>
+
+            <h2>Registrar mensualidad</h2>
+
+            <p class="text-muted">
+                Busca el cliente y registra el inicio de su mensualidad.
+            </p>
+
+        </div>
+
+
+        <form id="formMensualidad" autocomplete="off">
+
+
+            <!-- ================================================== -->
+            <!-- DOCUMENTO DEL CLIENTE -->
+            <!-- ================================================== -->
+
+            <div class="campo">
+
+                <label for="documento">
+                    Documento de identidad
+                </label>
+
+                <div class="grupo-documento">
+
+                    <div class="campo-documento">
+
+                        <input
+                            type="text"
+                            id="documento"
+                            class="form-control"
+                            placeholder="Ingrese el documento del cliente"
+                            autocomplete="off"
+                            required>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="boton-buscar"
+                        id="btnBuscar"
+                        title="Buscar cliente">
+
+                        🔍
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- MENSAJE -->
+            <!-- ================================================== -->
+
+            <div
+                id="mensaje"
+                class="mensaje">
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- INFORMACIÓN DEL CLIENTE -->
+            <!-- ================================================== -->
+
+            <div
+                id="datosCliente"
+                class="datos-cliente">
+
+                <h5>
+                    👤 Información del cliente
+                </h5>
+
+
+                <div class="row">
+
+
+                    <!-- NOMBRES -->
+
+                    <div class="col-md-6">
+
+                        <div class="campo">
+
+                            <label for="nombres">
+                                Nombres
+                            </label>
+
+                            <input
+                                type="text"
+                                id="nombres"
+                                disabled>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- APELLIDOS -->
+
+                    <div class="col-md-6">
+
+                        <div class="campo">
+
+                            <label for="apellidos">
+                                Apellidos
+                            </label>
+
+                            <input
+                                type="text"
+                                id="apellidos"
+                                disabled>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TIPO DOCUMENTO -->
+
+                    <div class="col-md-6">
+
+                        <div class="campo">
+
+                            <label for="tipo">
+                                Tipo de documento
+                            </label>
+
+                            <input
+                                type="text"
+                                id="tipo"
+                                disabled>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TELÉFONO -->
+
+                    <div class="col-md-6">
+
+                        <div class="campo">
+
+                            <label for="telefono">
+                                Teléfono
+                            </label>
+
+                            <input
+                                type="text"
+                                id="telefono"
+                                disabled>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DIRECCIÓN -->
+
+                    <div class="col-md-6">
+
+                        <div class="campo">
+
+                            <label for="direccion">
+                                Dirección
+                            </label>
+
+                            <input
+                                type="text"
+                                id="direccion"
+                                disabled>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CORREO -->
+
+                    <div class="col-md-6">
+
+                        <div class="campo">
+
+                            <label for="email">
+                                Correo electrónico
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                disabled>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- FECHA DE INICIO -->
+            <!-- ================================================== -->
+
+            <div
+                id="fechasMensualidad"
+                class="fechas-mensualidad"
+                style="display: none;">
+
+                <h5>
+                    📅 Período de mensualidad
+                </h5>
+
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="campo">
+
+                            <label for="fecha_inicio">
+                                Fecha de inicio
+                            </label>
+
+                            <input
+                                type="date"
+                                id="fecha_inicio"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-mensualidad">
+
+                    📅 La mensualidad tendrá una duración de 1 mes.
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- BOTONES -->
+            <!-- ================================================== -->
+
+            <div class="botones">
+
+                <a
+                    href="../index.html"
+                    class="btn btn-secondary btn-cancelar">
+
+                    Cancelar
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-success btn-registrar"
+                    id="btnRegistrar"
+                    disabled>
+
+                    ✅ Registrar mensualidad
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         PIE DE PÁGINA
+    =========================================== -->
+
+    <div id="footer-container"></div>
+
+
+
+    <!-- ======================================================
+         JAVASCRIPT
+         SIN BASE DE DATOS
+    ====================================================== -->
+
+    <script>
+
+
+        /* ======================================================
+           CARGAR HEADER
+        ====================================================== */
+
+        fetch("../inc/header.html")
+            .then(response => response.text())
+            .then(data => {
+
+                document.getElementById(
+                    "header-container"
+                ).innerHTML = data;
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "Error al cargar el header:",
+                    error
+                );
+
+            });
+
+
+
+        /* ======================================================
+           CARGAR FOOTER
+        ====================================================== */
+
+        fetch("../inc/footer.html")
+            .then(response => response.text())
+            .then(data => {
+
+                document.getElementById(
+                    "footer-container"
+                ).innerHTML = data;
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "Error al cargar el footer:",
+                    error
+                );
+
+            });
+
+
+
+        /* ======================================================
+           CLIENTES DEMOSTRATIVOS
+        ====================================================== */
+
+        const clientesDemo = [
+
+            {
+                documento: "1065632260",
+                nombres: "Juan David",
+                apellidos: "Romero Viloria",
+                tipo: "CC",
+                telefono: "3100000000",
+                direccion: "Calle 10 #20-30",
+                email: "juandavid@gmail.com"
+            },
+
+            {
+                documento: "1065643210",
+                nombres: "Carlos",
+                apellidos: "Pérez Gómez",
+                tipo: "CC",
+                telefono: "3001234567",
+                direccion: "Carrera 15 #12-45",
+                email: "carlos@gmail.com"
+            },
+
+            {
+                documento: "1065678901",
+                nombres: "María",
+                apellidos: "Rodríguez Díaz",
+                tipo: "CC",
+                telefono: "3159876543",
+                direccion: "Calle 20 #10-25",
+                email: "maria@gmail.com"
+            },
+
+            {
+                documento: "1087654321",
+                nombres: "Andrés",
+                apellidos: "González López",
+                tipo: "CC",
+                telefono: "3014567890",
+                direccion: "Carrera 8 #14-20",
+                email: "andres@gmail.com"
+            },
+
+            {
+                documento: "900123456",
+                nombres: "Gym Fitness",
+                apellidos: "Guajira S.A.S.",
+                tipo: "NIT",
+                telefono: "6057280000",
+                direccion: "Calle 5 #8-40",
+                email: "contacto@gymguajira.com"
+            }
+
+        ];
+
+
+
+        /* ======================================================
+           ELEMENTOS
+        ====================================================== */
+
+        const documento =
+            document.getElementById("documento");
+
+        const btnBuscar =
+            document.getElementById("btnBuscar");
+
+        const mensaje =
+            document.getElementById("mensaje");
+
+        const datosCliente =
+            document.getElementById("datosCliente");
+
+        const fechasMensualidad =
+            document.getElementById("fechasMensualidad");
+
+        const btnRegistrar =
+            document.getElementById("btnRegistrar");
+
+        const fechaInicio =
+            document.getElementById("fecha_inicio");
+
+
+
+        /* ======================================================
+           MOSTRAR MENSAJE
+        ====================================================== */
+
+        function mostrarMensaje(texto, tipo) {
+
+            mensaje.textContent = texto;
+
+            mensaje.className =
+                "mensaje " + tipo;
+
+        }
+
+
+
+        /* ======================================================
+           LIMPIAR CLIENTE
+        ====================================================== */
+
+        function limpiarCliente() {
+
+            document.getElementById("nombres").value = "";
+
+            document.getElementById("apellidos").value = "";
+
+            document.getElementById("tipo").value = "";
+
+            document.getElementById("telefono").value = "";
+
+            document.getElementById("direccion").value = "";
+
+            document.getElementById("email").value = "";
+
+            datosCliente.style.display = "none";
+
+            fechasMensualidad.style.display = "none";
+
+            fechaInicio.value = "";
+
+            btnRegistrar.disabled = true;
+
+        }
+
+
+
+        /* ======================================================
+           BUSCAR CLIENTE SIN BASE DE DATOS
+        ====================================================== */
+
+        function buscarCliente() {
+
+            const numeroDocumento =
+                documento.value.trim();
+
+
+            if (!numeroDocumento) {
+
+                limpiarCliente();
+
+                mostrarMensaje(
+                    "Ingresa el documento de identidad del cliente.",
+                    "error"
+                );
+
+                documento.focus();
+
+                return;
+
+            }
+
+
+            btnBuscar.disabled = true;
+
+            btnBuscar.textContent = "⏳";
+
+
+            setTimeout(function() {
+
+                const cliente =
+                    clientesDemo.find(
+                        function(item) {
+
+                            return (
+                                item.documento ===
+                                numeroDocumento
+                            );
+
+                        }
+                    );
+
+
+                if (!cliente) {
+
+                    limpiarCliente();
+
+                    mostrarMensaje(
+                        "❌ No se encontró el cliente con ese documento.",
+                        "error"
+                    );
+
+                    btnBuscar.disabled = false;
+
+                    btnBuscar.textContent = "🔍";
+
+                    return;
+
+                }
+
+
+                document.getElementById("nombres").value =
+                    cliente.nombres;
+
+                document.getElementById("apellidos").value =
+                    cliente.apellidos;
+
+                document.getElementById("tipo").value =
+                    cliente.tipo;
+
+                document.getElementById("telefono").value =
+                    cliente.telefono;
+
+                document.getElementById("direccion").value =
+                    cliente.direccion;
+
+                document.getElementById("email").value =
+                    cliente.email;
+
+
+                datosCliente.style.display =
+                    "block";
+
+                fechasMensualidad.style.display =
+                    "block";
+
+
+                mostrarMensaje(
+                    "✅ Cliente encontrado correctamente.",
+                    "exito"
+                );
+
+
+                establecerFechaInicial();
+
+
+                btnBuscar.disabled = false;
+
+                btnBuscar.textContent = "🔍";
+
+
+            }, 500);
+
+        }
+
+
+
+        /* ======================================================
+           BOTÓN BUSCAR
+        ====================================================== */
+
+        btnBuscar.addEventListener(
+            "click",
+            buscarCliente
+        );
+
+
+
+        /* ======================================================
+           BUSCAR CON ENTER
+        ====================================================== */
+
+        documento.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    buscarCliente();
+
+                }
+
+            }
+        );
+
+
+
+        /* ======================================================
+           SOLO NÚMEROS EN DOCUMENTO
+        ====================================================== */
+
+        documento.addEventListener(
+            "input",
+            function() {
+
+                this.value =
+                    this.value.replace(
+                        /\D/g,
+                        ""
+                    );
+
+            }
+        );
+
+
+
+        /* ======================================================
+           ESTABLECER FECHA
+        ====================================================== */
+
+        function establecerFechaInicial() {
+
+            const hoy =
+                new Date();
+
+
+            const año =
+                hoy.getFullYear();
+
+
+            const mes =
+                String(
+                    hoy.getMonth() + 1
+                ).padStart(2, "0");
+
+
+            const dia =
+                String(
+                    hoy.getDate()
+                ).padStart(2, "0");
+
+
+            fechaInicio.value =
+                `${año}-${mes}-${dia}`;
+
+
+            btnRegistrar.disabled =
+                false;
+
+        }
+
+
+
+        /* ======================================================
+           REGISTRAR MENSUALIDAD
+        ====================================================== */
+
+        document
+            .getElementById("formMensualidad")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    if (
+                        !documento.value.trim()
+                    ) {
+
+                        mostrarMensaje(
+                            "Ingresa el documento del cliente.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        !fechaInicio.value
+                    ) {
+
+                        mostrarMensaje(
+                            "Selecciona la fecha de inicio.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    const nombreCompleto =
+                        document.getElementById(
+                            "nombres"
+                        ).value +
+                        " " +
+                        document.getElementById(
+                            "apellidos"
+                        ).value;
+
+
+                    mostrarMensaje(
+                        "✅ Mensualidad registrada correctamente para " +
+                        nombreCompleto +
+                        ".",
+                        "exito"
+                    );
+
+
+                    alert(
+                        "✅ Mensualidad registrada correctamente.\n\n" +
+                        "Cliente: " +
+                        nombreCompleto +
+                        "\n" +
+                        "Documento: " +
+                        documento.value +
+                        "\n" +
+                        "Fecha de inicio: " +
+                        fechaInicio.value +
+                        "\n" +
+                        "Duración: 1 mes\n\n" +
+                        "Esta operación es demostrativa y no se guarda en una base de datos."
+                    );
+
+
+                    setTimeout(
+                        function() {
+
+                            document
+                                .getElementById(
+                                    "formMensualidad"
+                                )
+                                .reset();
+
+                            limpiarCliente();
+
+                            mensaje.textContent = "";
+
+                            mensaje.className =
+                                "mensaje";
+
+                        },
+                        1000
+                    );
+
+                }
+            );
+
+
+
+        /* ======================================================
+           SI CAMBIA EL DOCUMENTO
+        ====================================================== */
+
+        documento.addEventListener(
+            "input",
+            function() {
+
+                limpiarCliente();
+
+                mensaje.textContent = "";
+
+                mensaje.className =
+                    "mensaje";
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
+```
+
